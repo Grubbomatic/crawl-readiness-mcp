@@ -222,10 +222,11 @@ export function registerTools(server) {
     {
       title: "Generate robots.txt",
       description:
-        "Generate an AI-crawler-aware robots.txt for a website. Fetches the existing robots.txt (if any) and reports " +
-        "analysis + preset options. Presets: 'allow-all' (public businesses), 'search-only' (allow AI search, block " +
-        "training), 'recommended' (allow major AI assistants that cite sources, block training-only bots), 'block-all'. " +
-        "Requires an API key.",
+        "Generate a complete, ready-to-save AI-crawler-aware robots.txt for a website. Fetches the existing robots.txt " +
+        "(if any) and returns the finished file in `generated.robotsTxt` — the existing rules with an AI-crawler policy " +
+        "section merged in — plus the per-bot allow/block breakdown. Presets: 'allow-all' (public businesses), " +
+        "'search-only' (allow AI search, block training), 'recommended' (allow major AI assistants that cite sources, " +
+        "block training-only bots), 'block-all'. Write `generated.robotsTxt` to the site's /robots.txt. Requires an API key.",
       inputSchema: {
         url: z.string().describe("The website to generate a robots.txt for."),
         preset: z
@@ -239,8 +240,12 @@ export function registerTools(server) {
       },
     },
     async ({ url, preset }) => {
-      const data = await apiGet(`/api/generate-robots?url=${encodeURIComponent(url)}`, { requireApiKey: true });
-      return jsonContent({ requested_preset: preset || "recommended", ...data });
+      const chosen = preset || "recommended";
+      const data = await apiGet(
+        `/api/generate-robots?url=${encodeURIComponent(url)}&preset=${encodeURIComponent(chosen)}`,
+        { requireApiKey: true }
+      );
+      return jsonContent(data);
     }
   );
 
