@@ -1,0 +1,47 @@
+{
+  "name": "crawl-readiness-mcp",
+  "version": "0.1.1",
+  "description": "MCP server for Crawl Readiness — check AI readiness, validate schema/robots.txt, and generate AI SEO files (llms.txt, robots.txt, JSON-LD) directly from Claude, Cursor, and other MCP clients.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "crawl-readiness-mcp": "src/index.js"
+  },
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-seo",
+    "llms.txt",
+    "robots.txt",
+    "chatgpt",
+    "claude",
+    "perplexity",
+    "schema.org",
+    "json-ld",
+    "seo",
+    "crawler",
+    "ai-readiness"
+  ],
+  "author": "Crawl Readiness <crawlreadiness@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://www.crawlreadiness.com/mcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grubbomatic/crawl-readiness-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Grubbomatic/crawl-readiness-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^3.24.0"
+  }
+}
