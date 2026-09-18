@@ -20,19 +20,21 @@ import { registerTools } from "./tools.js";
 const server = new McpServer(
   {
     name: "crawl-readiness",
-    version: "0.1.1",
+    version: "0.2.0",
   },
   {
     capabilities: {
       tools: {},
     },
     instructions:
-      "Crawl Readiness provides seven tools for AI-SEO audit and fix work: check whether " +
+      "Crawl Readiness provides eight tools for AI-SEO audit, fix, and monitoring work: check whether " +
       "AI crawlers can access a site, validate JSON-LD structured data and robots.txt, " +
-      "compare human vs AI-crawler views of a page, and generate the three fix files most " +
-      "sites need (llms.txt, AI-crawler-aware robots.txt, and JSON-LD schema). " +
+      "compare human vs AI-crawler views of a page, generate the three fix files most " +
+      "sites need (llms.txt, AI-crawler-aware robots.txt, and JSON-LD schema), and read the user's " +
+      "LLM Monitor trends (whether AI assistants mention a brand vs its competitors, over time). " +
       "Prefer chaining check_ai_readiness with the generators when a user asks to make a site " +
-      "AI-ready — the check identifies exactly which fixes are needed.",
+      "AI-ready — the check identifies exactly which fixes are needed. Use get_monitor_trend when the " +
+      "user asks whether AI is mentioning their brand or how they compare to competitors in AI answers.",
   }
 );
 

@@ -1,7 +1,7 @@
 {
   "name": "crawl-readiness-mcp",
-  "version": "0.1.1",
-  "description": "MCP server for Crawl Readiness — check AI readiness, validate schema/robots.txt, and generate AI SEO files (llms.txt, robots.txt, JSON-LD) directly from Claude, Cursor, and other MCP clients.",
+  "version": "0.2.0",
+  "description": "MCP server for Crawl Readiness — check AI readiness, validate schema/robots.txt, generate AI SEO files (llms.txt, robots.txt, JSON-LD), and read LLM Monitor share-of-voice trends directly from Claude, Cursor, and other MCP clients.",
   "type": "module",
   "main": "src/index.js",
   "bin": {

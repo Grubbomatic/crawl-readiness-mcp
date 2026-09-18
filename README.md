@@ -10,7 +10,7 @@ No more copy-paste between your editor and yet another SEO tool.
 
 ## What it does
 
-Seven tools your AI assistant can call:
+Eight tools your AI assistant can call:
 
 **Audit (no signup):**
 - `check_ai_readiness` — Score a site 0–100 against 50+ AI crawlers, with a prioritized fix list
@@ -22,6 +22,9 @@ Seven tools your AI assistant can call:
 - `generate_llms_txt` — Auto-crawl a site and produce a properly formatted llms.txt
 - `generate_robots_txt` — AI-crawler-aware robots.txt with preset policies
 - `generate_schema` — Organization / WebSite / Article JSON-LD ready to paste
+
+**Monitor (read-only, requires free API key):**
+- `get_monitor_trend` — See whether ChatGPT, Claude, Perplexity & Google AI mention your brand vs competitors, and how that's trending week over week (reads your LLM Monitor projects; doesn't trigger runs)
 
 ---
 
@@ -127,6 +130,7 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 - **generate_llms_txt:** the file content + companion robots.txt snippet
 - **generate_robots_txt:** merged robots.txt with the AI policy applied
 - **generate_schema:** JSON-LD scripts for each detected schema type
+- **get_monitor_trend:** per-brand mention rate, share of voice, per-provider breakdown, competitor comparison, trend over time, and short example answers
 
 ---
 

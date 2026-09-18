@@ -272,4 +272,34 @@ export function registerTools(server) {
       return jsonContent(data);
     }
   );
+
+  // 8. get_monitor_trend (requires API key, read-only)
+  server.registerTool(
+    "get_monitor_trend",
+    {
+      title: "Get LLM Monitor Trend",
+      description:
+        "See whether AI assistants (ChatGPT, Claude, Perplexity, Google AI) actually mention a brand in their " +
+        "answers, and how that share-of-voice is trending versus competitors, week over week. Call with NO argument " +
+        "to list the user's monitored brands with each one's current mention rate and direction; pass a brand name " +
+        "or project id to get that brand's full trend, per-provider breakdown, competitor comparison, average " +
+        "position, and short example answers. Reads data the user's LLM Monitor projects have already collected — " +
+        "it does not trigger new runs. Read-only. Requires an API key.",
+      inputSchema: {
+        project: z
+          .string()
+          .optional()
+          .describe("Brand name or project id to detail. Omit to list all monitored brands."),
+      },
+      annotations: {
+        readOnlyHint: true,
+        openWorldHint: true,
+      },
+    },
+    async ({ project }) => {
+      const qs = project ? `?project=${encodeURIComponent(project)}` : "";
+      const data = await apiGet(`/api/monitor/summary${qs}`, { requireApiKey: true });
+      return jsonContent(data);
+    }
+  );
 }
