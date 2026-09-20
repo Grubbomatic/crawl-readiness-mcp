@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.grubbomatic/crawl-readiness",
-  "description": "Check whether ChatGPT, Claude, Perplexity and 50+ other AI crawlers can read a website — then generate the llms.txt, robots.txt and JSON-LD that fix it, and read your brand's share-of-voice trend across AI answers.",
+  "name": "io.github.Grubbomatic/crawl-readiness",
+  "description": "Audit any site for 50+ AI crawlers, generate llms.txt, robots.txt and schema, track AI mentions.",
   "repository": {
     "url": "https://github.com/Grubbomatic/crawl-readiness-mcp",
     "source": "github"
   },
-  "version": "0.2.1",
+  "version": "0.2.2",
   "websiteUrl": "https://www.crawlreadiness.com/mcp",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "crawl-readiness-mcp",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "transport": {
         "type": "stdio"
       },
