@@ -5,11 +5,22 @@
  * This module is a thin adapter: schema in, HTTP out, JSON back.
  */
 
+import { createRequire } from "node:module";
 import { z } from "zod";
 
 const API_BASE = process.env.CRAWL_READINESS_API_BASE || "https://www.crawlreadiness.com";
 const API_KEY = process.env.CRAWL_READINESS_API_KEY || null;
 const REQUEST_TIMEOUT_MS = 60_000;
+
+// Read from package.json rather than declared here, so this doesn't become yet
+// another version string to keep in sync.
+const { version: VERSION } = createRequire(import.meta.url)("../package.json");
+
+// Sent on every request so MCP traffic is distinguishable from the website in
+// server logs. Without it there is no way to answer "is anyone actually using
+// this?" — npm download counts include CI, mirrors, bots and every cold npx
+// invocation, so they measure curiosity, not use.
+const CLIENT_UA = `crawl-readiness-mcp/${VERSION} (+https://www.crawlreadiness.com/mcp)`;
 
 // --- HTTP helpers ------------------------------------------------------------
 
@@ -26,7 +37,7 @@ async function apiGet(path, { requireApiKey = false } = {}) {
     const err = needApiKey();
     if (err) throw new Error(err);
   }
-  const headers = {};
+  const headers = { "User-Agent": CLIENT_UA };
   if (API_KEY) headers["x-api-key"] = API_KEY;
 
   const controller = new AbortController();
@@ -44,7 +55,7 @@ async function apiPost(path, body, { requireApiKey = false } = {}) {
     const err = needApiKey();
     if (err) throw new Error(err);
   }
-  const headers = { "Content-Type": "application/json" };
+  const headers = { "Content-Type": "application/json", "User-Agent": CLIENT_UA };
   if (API_KEY) headers["x-api-key"] = API_KEY;
 
   const controller = new AbortController();

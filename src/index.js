@@ -13,14 +13,19 @@
  * generator tools accept an API key for higher limits.
  */
 
+import { createRequire } from "node:module";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerTools } from "./tools.js";
 
+// Single source of truth. This was a hard-coded string that had to be bumped
+// in lockstep with package.json and server.json, and drifted at least once.
+const { version: VERSION } = createRequire(import.meta.url)("../package.json");
+
 const server = new McpServer(
   {
     name: "crawl-readiness",
-    version: "0.2.2",
+    version: VERSION,
   },
   {
     capabilities: {

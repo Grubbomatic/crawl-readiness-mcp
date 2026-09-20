@@ -1,6 +1,6 @@
 {
   "name": "crawl-readiness-mcp",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "mcpName": "io.github.Grubbomatic/crawl-readiness",
   "description": "MCP server for Crawl Readiness — check AI readiness, validate schema/robots.txt, generate AI SEO files (llms.txt, robots.txt, JSON-LD), and read LLM Monitor share-of-voice trends directly from Claude, Cursor, and other MCP clients.",
   "type": "module",
@@ -44,5 +44,8 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "zod": "^3.24.0"
+  },
+  "scripts": {
+    "release": "node scripts/release.mjs"
   }
 }
