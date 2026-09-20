@@ -91,7 +91,7 @@ Once you have a key, add it via env in the same config:
 }
 ```
 
-Restart the client. All seven tools are now callable.
+Restart the client. All eight tools are now callable.
 
 ---
 
