@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.grubbomatic/crawl-readiness",
+  "description": "Check whether ChatGPT, Claude, Perplexity and 50+ other AI crawlers can read a website — then generate the llms.txt, robots.txt and JSON-LD that fix it, and read your brand's share-of-voice trend across AI answers.",
+  "repository": {
+    "url": "https://github.com/Grubbomatic/crawl-readiness-mcp",
+    "source": "github"
+  },
+  "version": "0.2.1",
+  "websiteUrl": "https://www.crawlreadiness.com/mcp",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "crawl-readiness-mcp",
+      "version": "0.2.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "CRAWL_READINESS_API_KEY",
+          "description": "Free API key from https://www.crawlreadiness.com/dashboard. The four audit tools work without it; the three generators and get_monitor_trend need it.",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "CRAWL_READINESS_API_BASE",
+          "description": "Override the API base URL. Only useful for testing against a preview deployment; defaults to https://www.crawlreadiness.com.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}

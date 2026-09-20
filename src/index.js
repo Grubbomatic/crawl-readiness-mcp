@@ -20,7 +20,7 @@ import { registerTools } from "./tools.js";
 const server = new McpServer(
   {
     name: "crawl-readiness",
-    version: "0.2.0",
+    version: "0.2.1",
   },
   {
     capabilities: {
