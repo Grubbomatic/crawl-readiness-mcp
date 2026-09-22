@@ -3,3 +3,6 @@ package-lock.json
 .env
 .env.local
 *.log
+# MCP Registry publisher CLI: a local tool, kept in the repo root but never committed
+mcp-publisher
+mcp-publisher.exe

@@ -116,4 +116,7 @@ next, in this order:
   3. mcp-publisher login github; mcp-publisher publish
      CHAIN THESE. The registry JWT expires in minutes and an attempt
      has already been lost to it.
+     (mcp-publisher is not in this repo — it is git-ignored. Download it
+      from https://github.com/modelcontextprotocol/registry/releases and
+      keep it on PATH or in the repo root.)
 `);

@@ -146,6 +146,10 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 
 Crawl Readiness is a suite of AI-SEO tools that check whether AI systems can access your website and help you fix what's blocked. Every generator tool in this MCP server is also available on the web at [crawlreadiness.com/tools](https://www.crawlreadiness.com/tools). The MCP server just makes the same tools callable from inside your AI assistant, so the "audit → fix → apply" loop happens in one conversation without leaving your editor.
 
+## Releasing (maintainers)
+
+`npm run release` validates `server.json` and prints the publish steps. The last step uses the `mcp-publisher` CLI, which is not part of this repository: download it from the [MCP Registry releases](https://github.com/modelcontextprotocol/registry/releases) and keep it on your PATH or in the repo root (it is git-ignored there).
+
 ## License
 
 MIT © 2026 Crawl Readiness / Tundrastone

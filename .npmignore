@@ -4,3 +4,5 @@ package-lock.json
 .env.local
 *.log
 .gitignore
+mcp-publisher
+mcp-publisher.exe
