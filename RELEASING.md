@@ -56,8 +56,12 @@ git push origin main --tags
 ## 4. npm (**founder**)
 
 ```bash
+npm whoami
 npm publish
 ```
+
+If `npm whoami` prints an error instead of the account name, the login has
+expired: run `npm login` first and sign in through the browser.
 
 npm asks for browser approval. The registry in step 5 checks `mcpName` against
 the **published** package, so npm always goes first.
@@ -75,6 +79,13 @@ the **published** package, so npm always goes first.
 
 Run the two as one line. The login's token expires within minutes, and a
 publish has already been lost to a pause between them.
+
+In Windows PowerShell `&&` does not exist. Use this instead, or run the two
+commands one straight after the other:
+
+```powershell
+./mcp-publisher.exe login github; if ($?) { ./mcp-publisher.exe publish }
+```
 
 `mcp-publisher.exe` is in the repo folder but not tracked by git. If it is
 missing, download it from
