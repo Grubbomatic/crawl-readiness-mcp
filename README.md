@@ -138,7 +138,7 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 
 - **Docs:** [crawlreadiness.com/mcp](https://www.crawlreadiness.com/mcp)
 - **Issues:** [github.com/Grubbomatic/crawl-readiness-mcp/issues](https://github.com/Grubbomatic/crawl-readiness-mcp/issues)
-- **Email:** crawlreadiness@gmail.com
+- **Email:** support@crawlreadiness.com
 
 ---
 
