@@ -115,7 +115,11 @@ export function registerTools(server) {
       description:
         "Check whether AI crawlers (ChatGPT, Claude, Perplexity, Google AI, and 50+ others) can access a website. " +
         "Returns a 0-100 AI readiness score, per-crawler access status, detected AI-specific files (llms.txt, agents.json), " +
-        "structured data presence, meta signals, and a prioritized fix list. Use this as the first step in any AI SEO audit.",
+        "structured data presence, meta signals, and a prioritized fix list. The score counts the crawlers that feed AI " +
+        "search and answers: each entry in `robots.results` carries its `purpose` and whether it is `scored`, and " +
+        "training-only crawlers are listed but never counted, so blocking them does not lower the score. Fixes marked " +
+        "`extra: true` (llms.txt, agents.json, Content-Signal, a markdown copy, agent-ready forms) are informational " +
+        "'Going further' items and do not affect the score; present them as optional. Use this as the first step in any AI SEO audit.",
       inputSchema: {
         url: z.string().describe("The website URL to check (e.g. 'example.com' or 'https://example.com/page')."),
       },
@@ -235,9 +239,11 @@ export function registerTools(server) {
       description:
         "Generate a complete, ready-to-save AI-crawler-aware robots.txt for a website. Fetches the existing robots.txt " +
         "(if any) and returns the finished file in `generated.robotsTxt` — the existing rules with an AI-crawler policy " +
-        "section merged in — plus the per-bot allow/block breakdown. Presets: 'allow-all' (public businesses), " +
-        "'search-only' (allow AI search, block training), 'recommended' (allow major AI assistants that cite sources, " +
-        "block training-only bots), 'block-all'. Write `generated.robotsTxt` to the site's /robots.txt. Requires an API key.",
+        "section merged in — plus the per-bot allow/block breakdown. Presets: 'allow-all' (every AI crawler allowed), " +
+        "'recommended' (blocks only the training-only crawlers; everything that feeds AI search and answers stays allowed), " +
+        "'search-only' (allows only the crawlers that feed AI search and answers, the ones the readiness score counts, " +
+        "and blocks the rest), 'block-all'. A file from 'recommended' or 'search-only' loses no points for crawler access. " +
+        "Write `generated.robotsTxt` to the site's /robots.txt. Requires an API key.",
       inputSchema: {
         url: z.string().describe("The website to generate a robots.txt for."),
         preset: z

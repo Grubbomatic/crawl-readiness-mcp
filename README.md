@@ -13,7 +13,7 @@ No more copy-paste between your editor and yet another SEO tool.
 Eight tools your AI assistant can call:
 
 **Audit (no signup):**
-- `check_ai_readiness` — Score a site 0–100 against 50+ AI crawlers, with a prioritized fix list
+- `check_ai_readiness` — Score a site 0–100 against 50+ AI crawlers, with a prioritized fix list; extras that don't affect the score are marked as such
 - `validate_schema` — Audit JSON-LD structured data on any URL (20+ types, per-type rules)
 - `validate_robots` — Line-by-line robots.txt audit
 - `check_content_parity` — Compare what humans see vs what AI crawlers see
@@ -123,7 +123,7 @@ Your AI can chain tools automatically — audit, identify issues, fix them, and 
 
 Each tool returns the full JSON response from the Crawl Readiness API — the same data the web dashboard renders. Your AI has access to:
 
-- **check_ai_readiness:** score, robots.txt status per crawler, structured-data flags, homepage signals, prioritized fix list
+- **check_ai_readiness:** score, robots.txt status per crawler, structured-data flags, homepage signals, prioritized fix list (fixes marked `extra: true` are optional and not scored)
 - **validate_schema:** per-block issues (errors, warnings, info), suggested missing types
 - **validate_robots:** line-by-line issues, AI-bot coverage summary
 - **check_content_parity:** verdict + per-crawler HTTP status, word overlap %, warnings
