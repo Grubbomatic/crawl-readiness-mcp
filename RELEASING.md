@@ -73,6 +73,14 @@ the **published** package, so npm always goes first.
 
 ## 5. MCP Registry (**founder**)
 
+The easy way: the GitHub Action in `.github/workflows/publish-mcp.yml`. It
+runs by itself when the GitHub Release in step 7 is published, and it can be
+run by hand from the repository's **Actions** tab ("Publish to MCP Registry"
+→ "Run workflow"). It signs in with the repository's own identity, so there is
+no code to type and nothing to expire. npm must already have the version.
+
+The manual way, if the Action is ever unavailable:
+
 ```bash
 ./mcp-publisher.exe login github && ./mcp-publisher.exe publish
 ```

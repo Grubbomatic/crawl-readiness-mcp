@@ -1,0 +1,39 @@
+# Publishes server.json to the MCP Registry from GitHub's own identity, so no
+# device code, token or local tool is needed. The registry lets the owner of
+# this repository publish io.github.Grubbomatic/* this way.
+#
+# Runs when a GitHub Release is published, or by hand from the Actions tab
+# ("Run workflow"). npm must already have the version server.json names,
+# because the registry checks the package on npm before it accepts.
+name: Publish to MCP Registry
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Show what will be published
+        run: |
+          node -e "const s=require('./server.json');console.log(s.name, s.version)"
+          echo "npm has: $(npm view crawl-readiness-mcp version)"
+
+      - name: Install the publisher
+        run: |
+          curl -sSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/').tar.gz" | tar xz mcp-publisher
+          ./mcp-publisher --version
+
+      - name: Log in with the repository's identity
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish
+        run: ./mcp-publisher publish
