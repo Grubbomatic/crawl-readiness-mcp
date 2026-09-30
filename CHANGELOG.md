@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Contact address in the README and the package author is now
+  support@crawlreadiness.com. 0.2.4 was published a minute before this
+  change, so it goes out with the next version.
+
 ## 0.2.4 — 2026-09-29
 
 Catches up with scoring v2 on crawlreadiness.com. No tool was added or
