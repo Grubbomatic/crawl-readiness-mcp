@@ -8,8 +8,17 @@
 import { createRequire } from "node:module";
 import { z } from "zod";
 
-const API_BASE = process.env.CRAWL_READINESS_API_BASE || "https://www.crawlreadiness.com";
-const API_KEY = process.env.CRAWL_READINESS_API_KEY || null;
+// A value that is still a template placeholder counts as unset. The plugin's
+// .mcp.json carries "${user_config.crawl_readiness_api_key}", which Claude
+// Code resolves; a client that copies the file verbatim (Cursor's directory
+// shows it as-is) would otherwise send the placeholder as the key.
+function envValue(name) {
+  const value = (process.env[name] || "").trim();
+  return value && !/^\$\{.*\}$/.test(value) ? value : null;
+}
+
+const API_BASE = envValue("CRAWL_READINESS_API_BASE") || "https://www.crawlreadiness.com";
+const API_KEY = envValue("CRAWL_READINESS_API_KEY");
 const REQUEST_TIMEOUT_MS = 60_000;
 
 // Read from package.json rather than declared here, so this doesn't become yet

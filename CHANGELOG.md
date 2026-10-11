@@ -1,10 +1,26 @@
 # Changelog
 
-## Unreleased
+## 0.2.5 — 2026-10-11
 
+Packaging for the directories; the eight tools and their inputs are unchanged.
+
+- The repository is now a Claude plugin: `.claude-plugin/plugin.json`,
+  `.mcp.json` (the published package, pinned to this version, with the API
+  key asked for through the plugin's own settings) and the `ai-readiness`
+  skill, which tells Claude when to use which tool and how to read a result
+  (training-only blocks cost no points, extras are optional, "Restricted by
+  Design" is a choice).
+- An MCP Bundle for Claude Desktop's one-click install and for Smithery:
+  `manifest.json`, an icon, `.mcpbignore`, and a GitHub Action that builds
+  `crawl-readiness-mcp-<version>.mcpb` on every release and attaches it.
+- `CRAWL_READINESS_API_KEY` and `CRAWL_READINESS_API_BASE` ignore a value
+  that is still a template placeholder (`${user_config.…}`), so a client
+  that copies the plugin's config verbatim keeps the audit tools working.
+- `scripts/release.mjs` bumps the plugin manifest, the bundle manifest and
+  the pinned launcher together with `package.json` and `server.json`.
 - Contact address in the README and the package author is now
-  support@crawlreadiness.com. 0.2.4 was published a minute before this
-  change, so it goes out with the next version.
+  support@crawlreadiness.com (0.2.4 was published a minute before that
+  change).
 
 ## 0.2.4 — 2026-09-29
 

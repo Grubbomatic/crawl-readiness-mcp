@@ -6,3 +6,5 @@ package-lock.json
 # MCP Registry publisher CLI: a local tool, kept in the repo root but never committed
 mcp-publisher
 mcp-publisher.exe
+# Built bundles: release assets, never committed (the plugin validator holds binaries)
+*.mcpb

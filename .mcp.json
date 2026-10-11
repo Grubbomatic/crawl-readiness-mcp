@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "crawl-readiness": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "crawl-readiness-mcp@0.2.5"
+      ],
+      "env": {
+        "CRAWL_READINESS_API_KEY": "${user_config.crawl_readiness_api_key}"
+      }
+    }
+  }
+}

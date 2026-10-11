@@ -45,6 +45,20 @@ for (const p of srv.packages || []) p.version = version;
 write("package.json", pkg);
 write("server.json", srv);
 
+// The plugin manifest, the MCPB manifest and the plugin's pinned npx launcher
+// carry the version too (the plugin directory requires an exact pin).
+const plugin = read(".claude-plugin/plugin.json");
+plugin.version = version;
+write(".claude-plugin/plugin.json", plugin);
+const bundle = read("manifest.json");
+bundle.version = version;
+write("manifest.json", bundle);
+const mcp = read(".mcp.json");
+for (const s of Object.values(mcp.mcpServers || {})) {
+  s.args = (s.args || []).map((a) => (a.startsWith(`${pkg.name}@`) ? `${pkg.name}@${version}` : a));
+}
+write(".mcp.json", mcp);
+
 console.log(`version ${previous} -> ${version}`);
 
 // --- validate ---------------------------------------------------------------

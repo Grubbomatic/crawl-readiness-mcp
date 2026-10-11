@@ -113,8 +113,47 @@ Either:
 
 ## 7. GitHub Release (**founder**, or in the browser)
 
-On github.com: Releases → Draft a new release → choose tag `v0.2.4` → paste
+On github.com: Releases → Draft a new release → choose tag `v0.2.5` → paste
 the changelog entry → Publish.
+
+Publishing the release starts two Actions: "Publish to MCP Registry" (step
+5) and "Build the MCPB bundle", which packs `manifest.json`, the server, its
+runtime dependencies and the icon into `crawl-readiness-mcp-<version>.mcpb`
+and attaches it to the release. Check both are green under **Actions** before
+step 7b; the bundle takes about a minute.
+
+## 7b. The bundle and the directories (**founder**)
+
+The same release feeds four listings. Each needs a login, so each is yours.
+
+1. **Claude Desktop, one click.** Nothing to submit: the `.mcpb` on the
+   release is the install. Download it once and double-click it to check the
+   install dialog shows the icon, the description and the optional API key.
+2. **Smithery.** Publish the bundle from the release with the Smithery CLI
+   (it signs you in through the browser the first time):
+
+   ```bash
+   npx -y @smithery/cli mcp publish ./crawl-readiness-mcp-0.2.5.mcpb -n grubbomatic/crawl-readiness
+   ```
+
+   Then open the server's **Settings → Verification** page on smithery.ai and
+   complete the official-vendor checklist.
+3. **Anthropic's directory (Claude plugin).** Open
+   https://claude.ai/directory/manage → **Submit new** → **Plugin bundle** →
+   repository `Grubbomatic/crawl-readiness-mcp`, plugin path empty, tracked
+   tag `v0.2.5` (so a push to main never ships an unreviewed version) →
+   **Validate** → answer the data questions (the plugin sends the address you
+   ask about and the optional key to www.crawlreadiness.com, nothing else;
+   nothing is stored; not for under-18s) → **Submit for review**. A local
+   server that starts a pinned npm package is always held for a reviewer;
+   that is expected, not a failure. Publishing the next version means
+   changing the tracked tag on the plugin's **Settings** tab.
+4. **cursor.directory.** https://cursor.directory/plugins/new → sign in with
+   GitHub → paste `https://github.com/Grubbomatic/crawl-readiness-mcp` →
+   Submit. It reads `.mcp.json` by itself.
+
+PulseMCP is not accepting submissions and says it will pick up Official
+Registry listings when it reopens, so step 5 covers it. mcp.so reads npm.
 
 ## 8. Chrome extension, when the popup changed
 
@@ -143,5 +182,7 @@ still agree.
 - `npx -y crawl-readiness-mcp@latest` in a terminal should print the new
   version on start.
 - The registry entry and the Glama page should show the new version within a
-  few minutes.
+  few minutes, and the release should carry the `.mcpb`.
+- The Smithery listing, the directory submission and cursor.directory each
+  show the new version (the directory follows the tracked tag).
 - Note the release in the Build Queue.

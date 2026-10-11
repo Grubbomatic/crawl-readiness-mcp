@@ -30,7 +30,21 @@ Eight tools your AI assistant can call:
 
 ## Install
 
-### For Claude Desktop
+### Claude Desktop, one click
+
+Download `crawl-readiness-mcp-<version>.mcpb` from the [latest release](https://github.com/Grubbomatic/crawl-readiness-mcp/releases/latest) and double-click it (or drag it into the Claude Desktop window). Claude Desktop shows what the extension does and asks for the optional API key. The bundle carries the server and its dependencies, so nothing else is installed.
+
+### Claude Code, as a plugin
+
+This repository is also a Claude plugin: the `.mcp.json` at its root starts the server (pinned to this version), and the `ai-readiness` skill tells Claude when to use which tool and how to read the results. Add it from the Claude directory once it is listed there. To try it before then, clone the repository and start Claude Code with it loaded:
+
+```bash
+claude --plugin-dir ./crawl-readiness-mcp
+```
+
+Claude Code asks for the optional API key when the plugin is enabled and keeps it in secure storage; the plugin's own files never contain it.
+
+### For Claude Desktop, by hand
 
 Open your config file:
 
@@ -131,6 +145,14 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 - **generate_robots_txt:** merged robots.txt with the AI policy applied
 - **generate_schema:** JSON-LD scripts for each detected schema type
 - **get_monitor_trend:** per-brand mention rate, share of voice, per-provider breakdown, competitor comparison, trend over time, and short example answers
+
+---
+
+## What this sends, and where
+
+Every tool makes HTTPS requests to `https://www.crawlreadiness.com` and nowhere else. What leaves your machine is the website address (and for the generators, the inputs) you asked about, the API key if you configured one, and a `crawl-readiness-mcp/<version>` user agent. The server stores nothing locally, runs no other programs, and reads no files; writing a generated file into your project is something your AI client does, with your say-so. The service's own data handling is described at [crawlreadiness.com/privacy](https://www.crawlreadiness.com/privacy).
+
+The plugin's `.mcp.json` starts the published npm package pinned to the same version as the repository (`npx -y crawl-readiness-mcp@<version>`), so what runs is the code in this repository at that tag.
 
 ---
 

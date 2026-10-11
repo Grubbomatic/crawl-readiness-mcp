@@ -1,0 +1,22 @@
+# What stays out of the .mcpb bundle: the bundle carries the server, its
+# runtime dependencies, the manifest, the icon, the README and the licence.
+.git/
+.github/
+.claude-plugin/
+skills/
+scripts/
+.mcp.json
+.gitignore
+.npmignore
+.mcpbignore
+Dockerfile
+glama.json
+server.json
+RELEASING.md
+CHANGELOG.md
+*.mcpb
+*.log
+.env
+.env.local
+mcp-publisher
+mcp-publisher.exe
