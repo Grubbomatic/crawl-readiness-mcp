@@ -1,6 +1,6 @@
 # Crawl Readiness MCP Server
 
-**AI SEO tools inside Claude, Cursor, and other MCP-compatible clients.**
+**An MCP server that checks a website's AI readiness: can ChatGPT, Claude, Perplexity, Google AI and 50+ other AI crawlers access it?** Then it generates the fixes (llms.txt, an AI-crawler robots.txt, JSON-LD structured data) and reads your LLM Monitor results, inside Claude Desktop, Cursor, Cline, Windsurf and other MCP clients.
 
 Ask Claude "is my site AI-readable?" and it'll actually check — running a live audit against 50+ AI crawlers (ChatGPT, Claude, Perplexity, Google AI, and more). Then ask it to fix what's broken, and it can generate a proper `llms.txt`, `robots.txt`, or JSON-LD schema and write it straight into your project.
 
