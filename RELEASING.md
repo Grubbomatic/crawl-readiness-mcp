@@ -129,15 +129,20 @@ The same release feeds four listings. Each needs a login, so each is yours.
 1. **Claude Desktop, one click.** Nothing to submit: the `.mcpb` on the
    release is the install. Download it once and double-click it to check the
    install dialog shows the icon, the description and the optional API key.
-2. **Smithery.** Publish the bundle from the release with the Smithery CLI
-   (it signs you in through the browser the first time):
+2. **Smithery.** Publish the *Smithery copy* of the bundle from the release
+   with the Smithery CLI (the first time it asks for a Smithery API key, made
+   at smithery.ai → account → API keys):
 
    ```bash
-   npx -y @smithery/cli mcp publish ./crawl-readiness-mcp-0.2.5.mcpb -n grubbomatic/crawl-readiness
+   npx -y @smithery/cli mcp publish ./crawl-readiness-mcp-0.2.5-smithery.mcpb -n grubbomatic/crawl-readiness
    ```
 
-   Then open the server's **Settings → Verification** page on smithery.ai and
-   complete the official-vendor checklist.
+   Not the plain bundle: Smithery wants an `inputSchema` on every tool in the
+   manifest, which the MCPB spec does not allow, so the release carries both
+   (`scripts/smithery-bundle.mjs` builds the copy in the bundle Action; run
+   it by hand on a downloaded bundle if needed). Then open the server's
+   **Settings → Verification** page on smithery.ai and complete the
+   official-vendor checklist.
 3. **Anthropic's directory (Claude plugin).** Open
    https://claude.ai/directory/manage → **Submit new** → **Plugin bundle** →
    repository `Grubbomatic/crawl-readiness-mcp`, plugin path empty, tracked
