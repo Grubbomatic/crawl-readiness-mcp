@@ -140,8 +140,25 @@ The same release feeds four listings. Each needs a login, so each is yours.
    Not the plain bundle: Smithery wants an `inputSchema` on every tool in the
    manifest, which the MCPB spec does not allow, so the release carries both
    (`scripts/smithery-bundle.mjs` builds the copy in the bundle Action; run
-   it by hand on a downloaded bundle if needed). Then open the server's
-   **Settings → Verification** page on smithery.ai and complete the
+   it by hand on a downloaded bundle if needed).
+
+   Three things the first publish (12 Oct 2026) taught:
+
+   - The namespace has to exist before the server can. `grubbomatic` was
+     claimed that day with `npx -y @smithery/cli namespace create grubbomatic`
+     (the account's own namespace is `jaygrubb40`). Publishing into a
+     namespace that does not exist offers to create the server and then
+     fails with `404 Namespace not found`; `namespace list` shows what there
+     is.
+   - The CLI keeps the API key on the machine after the first publish, so a
+     later release asks for nothing.
+   - Smithery reads only the tools, the version and the user config from the
+     bundle. The listing's display name, description, homepage, repository
+     link and icon live on the server's **Settings → General** tab on
+     smithery.ai, set once on 12 Oct 2026; touch them after a release only
+     when the wording changed.
+
+   Then open the server's **Settings → Verification** page and complete the
    official-vendor checklist.
 3. **Anthropic's directory (Claude plugin).** Open
    https://claude.ai/directory/manage → **Submit new** → **Plugin bundle** →
