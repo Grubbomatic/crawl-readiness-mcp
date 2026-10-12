@@ -164,12 +164,22 @@ The same release feeds four listings. Each needs a login, so each is yours.
    https://claude.ai/directory/manage → **Submit new** → **Plugin bundle** →
    repository `Grubbomatic/crawl-readiness-mcp`, plugin path empty, tracked
    tag `v0.2.5` (so a push to main never ships an unreviewed version) →
-   **Validate** → answer the data questions (the plugin sends the address you
-   ask about and the optional key to www.crawlreadiness.com, nothing else;
-   nothing is stored; not for under-18s) → **Submit for review**. A local
-   server that starts a pinned npm package is always held for a reviewer;
-   that is expected, not a failure. Publishing the next version means
-   changing the tracked tag on the plugin's **Settings** tab.
+   **Validate** → answer the data questions as they were answered on 12 Oct
+   2026: no personal data; no skill sends data anywhere (the MCP server
+   talks only to www.crawlreadiness.com); retention "Longer", because the
+   site keeps every check's domain and score (they feed the leaderboard and
+   the account's usage count); not for under-18s → **Submit for review**.
+   Listed on Claude Code only: the directory says a local server that needs
+   a user setting will not start on Cowork, and claude.ai cannot run local
+   servers. A local server that starts a pinned npm package is always held
+   for a reviewer; that is expected, not a failure. The 12 Oct validation
+   passed with 5 policy holds and 6 warnings; the ones worth clearing in a
+   later release are the lockfile (commit `package-lock.json`, needed for
+   the Verified badge) and the four listing-only fields in plugin.json
+   (`documentationUrl`, `supportUrl`, `privacyPolicyUrl`,
+   `termsOfServiceUrl`) that Claude Code does not recognise. Publishing the
+   next version means changing the tracked tag on the plugin's **Settings**
+   tab.
 4. **cursor.directory.** https://cursor.directory/plugins/new → sign in with
    GitHub → paste `https://github.com/Grubbomatic/crawl-readiness-mcp` →
    Submit. It reads `.mcp.json` by itself.
