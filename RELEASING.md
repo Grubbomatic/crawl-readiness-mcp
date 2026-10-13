@@ -182,7 +182,14 @@ The same release feeds four listings. Each needs a login, so each is yours.
    tab.
 4. **cursor.directory.** https://cursor.directory/plugins/new → sign in with
    GitHub → paste `https://github.com/Grubbomatic/crawl-readiness-mcp` →
-   Submit. It reads `.mcp.json` by itself.
+   **Scan repo**. The scan reads plugin.json, `.mcp.json` and the skill.
+   Before **Publish Plugin**, set the name to "Crawl Readiness" (the scan
+   uses the slug), upload `icon.png` as the logo and give the MCP server
+   component a one-line description; all three were done by hand on 12 Oct
+   2026. The plugin lives at https://cursor.directory/plugins/crawl-readiness
+   and goes public once the directory's own security scan finishes. It does
+   not follow the repo afterwards: after a release, re-scan from that page
+   if the install snippet changed.
 
 PulseMCP is not accepting submissions and says it will pick up Official
 Registry listings when it reopens, so step 5 covers it. mcp.so reads npm.
