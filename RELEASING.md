@@ -113,7 +113,7 @@ Either:
 
 ## 7. GitHub Release (**founder**, or in the browser)
 
-On github.com: Releases → Draft a new release → choose tag `v0.2.5` → paste
+On github.com: Releases → Draft a new release → choose tag `v0.2.6` → paste
 the changelog entry → Publish.
 
 Publishing the release starts two Actions: "Publish to MCP Registry" (step
@@ -134,7 +134,7 @@ The same release feeds four listings. Each needs a login, so each is yours.
    at smithery.ai → account → API keys):
 
    ```bash
-   npx -y @smithery/cli mcp publish ./crawl-readiness-mcp-0.2.5-smithery.mcpb -n grubbomatic/crawl-readiness
+   npx -y @smithery/cli mcp publish ./crawl-readiness-mcp-0.2.6-smithery.mcpb -n grubbomatic/crawl-readiness
    ```
 
    Not the plain bundle: Smithery wants an `inputSchema` on every tool in the
@@ -163,7 +163,7 @@ The same release feeds four listings. Each needs a login, so each is yours.
 3. **Anthropic's directory (Claude plugin).** Open
    https://claude.ai/directory/manage → **Submit new** → **Plugin bundle** →
    repository `Grubbomatic/crawl-readiness-mcp`, plugin path empty, tracked
-   tag `v0.2.5` (so a push to main never ships an unreviewed version) →
+   tag `v0.2.6` (so a push to main never ships an unreviewed version) →
    **Validate** → answer the data questions as they were answered on 12 Oct
    2026: no personal data; no skill sends data anywhere (the MCP server
    talks only to www.crawlreadiness.com); retention "Longer", because the

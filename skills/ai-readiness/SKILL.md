@@ -1,12 +1,13 @@
 ---
 name: ai-readiness
-description: Check whether AI crawlers and assistants (ChatGPT, Claude, Perplexity, Google AI) can read a website, fix what blocks them, and read the LLM Monitor trend. Use when the user asks if their site is AI-readable or AI-ready, mentions GPTBot, ClaudeBot, OAI-SearchBot, llms.txt, robots.txt for AI, agents.json, GEO or AI SEO, asks what ChatGPT can see on a site, or asks whether AI assistants mention their brand.
+description: Check whether AI crawlers and assistants (ChatGPT, Claude, Perplexity, Google AI) can read a website, fix what blocks them, and read the LLM Monitor trend. Use when the user asks if their site is AI-readable or AI-ready, mentions GPTBot, ClaudeBot, OAI-SearchBot, llms.txt, robots.txt for AI, agents.json, GEO or AI SEO, asks what ChatGPT can see on a site, asks whether AI assistants mention their brand, or asks whether they may crawl, quote, index, train on or act on a page.
 ---
 
 # AI readiness with the Crawl Readiness tools
 
-The `crawl-readiness` MCP server gives you eight tools that call the live
-service at www.crawlreadiness.com. Use them in this order.
+The `crawl-readiness` MCP server gives you nine tools that call the live
+service at www.crawlreadiness.com (the permission check at
+machinereadiness.com, the standard's own host). Use them in this order.
 
 ## 1. Check first
 
@@ -52,6 +53,29 @@ run. Each result is labelled by how it was measured: live search (Perplexity,
 Google AI Overviews) or model knowledge (ChatGPT, Claude, from their APIs).
 Say which is which when you report a number, and treat a single run as a
 sample, not a verdict.
+
+## 4. Permission, before using a page
+
+`check_permission` asks whether a page may be used for one purpose:
+`search`, `answer` (including retrieval for RAG), `train` or `agent`.
+Run it before fetching pages for a dataset, an index or an agent action, and
+when the user asks whether they may use, quote or train on a page.
+
+- `verdict` is conservative on purpose. `denied` means at least one
+  published signal reserves the use. `allowed-under-terms` means an RSL
+  licence permits it on the conditions in `terms`. `allowed` means only
+  that nothing reserves the use, which is not a licence. `unknown` means
+  the site's robots.txt could not be read; say "unknown", never "allowed".
+- `signals` lists every source read (robots.txt, Content-Signal,
+  Content-Usage, RSL, TDM, ai.txt, the page's own tags) with what it
+  decided. Quote the one that decided the verdict.
+- `observed` is what the server did when asked as a representative crawler.
+  A `denied` with `served` means the site states a reservation but does not
+  enforce it; report both, and never treat serving as permission.
+- `receipt` is a dated, signed record of all of this. Offer to keep it when
+  the user may later need to show what the site published on that date.
+- It is a reading of published signals, not legal advice. Say so when the
+  user is deciding what to do with the answer.
 
 ## What to avoid
 

@@ -82,6 +82,16 @@ try {
   if (byName.generate_robots_txt && /cite sources/.test(byName.generate_robots_txt)) {
     problems.push("generate_robots_txt: description still describes the pre-scoring-v2 'recommended' preset");
   }
+  if (!byName.check_permission) {
+    problems.push("check_permission is not listed");
+  } else if (!/not legal advice/.test(byName.check_permission)) {
+    problems.push("check_permission: description must say it is a reading of published signals, not legal advice");
+  }
+  const permission = tools.find((t) => t.name === "check_permission");
+  const purposes = permission?.inputSchema?.properties?.purpose?.enum || [];
+  if (permission && String(purposes) !== "search,answer,train,agent") {
+    problems.push(`check_permission: purpose enum is [${purposes}], expected search, answer, train, agent`);
+  }
 } catch (e) {
   problems.push(e.message);
 } finally {

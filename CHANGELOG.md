@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.2.6 — 2026-10-24
+
+One tool added: `check_permission`, the Machine Readiness permission check.
+No other tool's inputs changed.
+
+- `check_permission` asks whether a page may be used for a purpose
+  (`search`, `answer`, `train` or `agent`). It reads every
+  machine-readable signal the site publishes (robots.txt per crawler,
+  Cloudflare Content-Signal, the IETF Content-Usage directive and header, an
+  RSL licence, a TDM reservation, ai.txt, noai/noindex/nosnippet on the
+  page), requests the page once as a representative crawler and reports
+  whether the server served or refused it, and returns a dated receipt
+  signed with Ed25519 (public key at `/api/permission-key`). Verdicts:
+  `denied`, `allowed-under-terms`, `allowed`, `unknown`. An optional
+  `agent` asks about one crawler token; `observe: false` skips the request
+  to the site. No API key needed; 25 calls a day per network without one.
+  Documented at https://machinereadiness.com/permission.
+- The permission call goes to machinereadiness.com, the standard's own host,
+  so the receipt names it as issuer. `CRAWL_READINESS_API_BASE` overrides
+  it together with everything else.
+- The server's instructions, the README, the plugin skill, the bundle
+  manifest and the registry entry describe nine tools; the smoke test checks
+  the new tool is listed with its four purposes.
+
 ## 0.2.5 — 2026-10-11
 
 Packaging for the directories; the eight tools and their inputs are unchanged.

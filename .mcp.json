@@ -4,7 +4,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "crawl-readiness-mcp@0.2.5"
+        "crawl-readiness-mcp@0.2.6"
       ],
       "env": {
         "CRAWL_READINESS_API_KEY": "${user_config.crawl_readiness_api_key}"

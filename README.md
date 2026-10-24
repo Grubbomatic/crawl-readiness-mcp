@@ -1,6 +1,6 @@
 # Crawl Readiness MCP Server
 
-**An MCP server that checks a website's AI readiness: can ChatGPT, Claude, Perplexity, Google AI and 50+ other AI crawlers access it?** Then it generates the fixes (llms.txt, an AI-crawler robots.txt, JSON-LD structured data) and reads your LLM Monitor results, inside Claude Desktop, Cursor, Cline, Windsurf and other MCP clients.
+**An MCP server that checks a website's AI readiness: can ChatGPT, Claude, Perplexity, Google AI and 50+ other AI crawlers access it?** Then it generates the fixes (llms.txt, an AI-crawler robots.txt, JSON-LD structured data), reads your LLM Monitor results, and tells you whether a page's published signals permit a use (search, answers, training, agent action), inside Claude Desktop, Cursor, Cline, Windsurf and other MCP clients.
 
 Ask Claude "is my site AI-readable?" and it'll actually check — running a live audit against 50+ AI crawlers (ChatGPT, Claude, Perplexity, Google AI, and more). Then ask it to fix what's broken, and it can generate a proper `llms.txt`, `robots.txt`, or JSON-LD schema and write it straight into your project.
 
@@ -10,13 +10,16 @@ No more copy-paste between your editor and yet another SEO tool.
 
 ## What it does
 
-Eight tools your AI assistant can call:
+Nine tools your AI assistant can call:
 
 **Audit (no signup):**
 - `check_ai_readiness` — Score a site 0–100 against 50+ AI crawlers, with a prioritized fix list; extras that don't affect the score are marked as such
 - `validate_schema` — Audit JSON-LD structured data on any URL (20+ types, per-type rules)
 - `validate_robots` — Line-by-line robots.txt audit
 - `check_content_parity` — Compare what humans see vs what AI crawlers see
+
+**Permission (no signup):**
+- `check_permission` — Ask whether a page may be used for search, answers, training or agent action. Reads robots.txt, Content-Signal, Content-Usage, an RSL licence, the TDM reservation, ai.txt and the page's own noai tags, reports what the server did when a crawler asked, and returns a dated receipt signed with Ed25519. Documented at [machinereadiness.com/permission](https://machinereadiness.com/permission)
 
 **Generate (requires free API key):**
 - `generate_llms_txt` — Auto-crawl a site and produce a properly formatted llms.txt
@@ -105,7 +108,7 @@ Once you have a key, add it via env in the same config:
 }
 ```
 
-Restart the client. All eight tools are now callable.
+Restart the client. All nine tools are now callable.
 
 ---
 
@@ -119,6 +122,8 @@ Once installed, try any of these in your AI client:
 - *"Compare what humans see vs what AI crawlers see on producthunt.com"*
 - *"Generate an llms.txt for my site and save it to `/public/llms.txt`"*
 - *"My site scored 68/100 — walk me through the fixes"*
+- *"May I train on https://example.com/research? Check what the site publishes."*
+- *"Before we build the RAG index, which of these pages reserve AI answers?"*
 
 Your AI can chain tools automatically — audit, identify issues, fix them, and write files to your project without you copy-pasting anything.
 
@@ -128,8 +133,8 @@ Your AI can chain tools automatically — audit, identify issues, fix them, and 
 
 | Env var | Purpose | Default |
 |---|---|---|
-| `CRAWL_READINESS_API_KEY` | Free API key for generator tools | none |
-| `CRAWL_READINESS_API_BASE` | Override the API base URL (for testing) | `https://www.crawlreadiness.com` |
+| `CRAWL_READINESS_API_KEY` | Free API key for the generators and the Monitor read; lifts the daily limit on `check_permission` | none |
+| `CRAWL_READINESS_API_BASE` | Override the API base URL for every tool, the permission check included (for testing) | `https://www.crawlreadiness.com` |
 
 ---
 
@@ -141,6 +146,7 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 - **validate_schema:** per-block issues (errors, warnings, info), suggested missing types
 - **validate_robots:** line-by-line issues, AI-bot coverage summary
 - **check_content_parity:** verdict + per-crawler HTTP status, word overlap %, warnings
+- **check_permission:** verdict (`denied`, `allowed-under-terms`, `allowed`, `unknown`) with the reason, every signal as it was read, what the server did when asked as a crawler, and the signed receipt
 - **generate_llms_txt:** the file content + companion robots.txt snippet
 - **generate_robots_txt:** merged robots.txt with the AI policy applied
 - **generate_schema:** JSON-LD scripts for each detected schema type
@@ -150,7 +156,7 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 
 ## What this sends, and where
 
-Every tool makes HTTPS requests to `https://www.crawlreadiness.com` and nowhere else. What leaves your machine is the website address (and for the generators, the inputs) you asked about, the API key if you configured one, and a `crawl-readiness-mcp/<version>` user agent. The server stores nothing locally, runs no other programs, and reads no files; writing a generated file into your project is something your AI client does, with your say-so. The service's own data handling is described at [crawlreadiness.com/privacy](https://www.crawlreadiness.com/privacy).
+Every tool makes HTTPS requests to `https://www.crawlreadiness.com`, and `check_permission` to `https://machinereadiness.com` (the same service on the standard's own host), and nowhere else. What leaves your machine is the website address (and for the generators, the inputs) you asked about, the API key if you configured one, and a `crawl-readiness-mcp/<version>` user agent. The server stores nothing locally, runs no other programs, and reads no files; writing a generated file into your project is something your AI client does, with your say-so. The service's own data handling is described at [crawlreadiness.com/privacy](https://www.crawlreadiness.com/privacy).
 
 The plugin's `.mcp.json` starts the published npm package pinned to the same version as the repository (`npx -y crawl-readiness-mcp@<version>`), so what runs is the code in this repository at that tag.
 

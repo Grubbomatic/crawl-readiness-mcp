@@ -1,8 +1,10 @@
 /**
  * Tool definitions and implementations for the Crawl Readiness MCP server.
  *
- * Each tool corresponds to a live endpoint at api.crawlreadiness.com.
- * This module is a thin adapter: schema in, HTTP out, JSON back.
+ * Each tool corresponds to a live endpoint at www.crawlreadiness.com (the
+ * permission check, at machinereadiness.com, is the same service on the
+ * standard's own host). This module is a thin adapter: schema in, HTTP out,
+ * JSON back.
  */
 
 import { createRequire } from "node:module";
@@ -19,6 +21,11 @@ function envValue(name) {
 
 const API_BASE = envValue("CRAWL_READINESS_API_BASE") || "https://www.crawlreadiness.com";
 const API_KEY = envValue("CRAWL_READINESS_API_KEY");
+// The permission check is the Machine Readiness standard's API: the same
+// service on a second host, and a receipt names the host that issued it. The
+// call goes there unless the base is overridden for testing, in which case
+// every tool goes to the override.
+const PERMISSION_API_BASE = envValue("CRAWL_READINESS_API_BASE") || "https://machinereadiness.com";
 const REQUEST_TIMEOUT_MS = 60_000;
 
 // Read from package.json rather than declared here, so this doesn't become yet
@@ -41,7 +48,7 @@ function needApiKey() {
   );
 }
 
-async function apiGet(path, { requireApiKey = false } = {}) {
+async function apiGet(path, { requireApiKey = false, base = API_BASE } = {}) {
   if (requireApiKey) {
     const err = needApiKey();
     if (err) throw new Error(err);
@@ -52,7 +59,7 @@ async function apiGet(path, { requireApiKey = false } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
-    const res = await fetch(API_BASE + path, { headers, signal: controller.signal });
+    const res = await fetch(base + path, { headers, signal: controller.signal });
     return await parseResponse(res);
   } finally {
     clearTimeout(timer);
@@ -325,6 +332,57 @@ export function registerTools(server) {
     async ({ project }) => {
       const qs = project ? `?project=${encodeURIComponent(project)}` : "";
       const data = await apiGet(`/api/monitor/summary${qs}`, { requireApiKey: true });
+      return jsonContent(data);
+    }
+  );
+
+  // 9. check_permission (no API key needed; one lifts the daily limit)
+  server.registerTool(
+    "check_permission",
+    {
+      title: "Check Permission to Use a Page",
+      description:
+        "Ask whether a page may be used for a purpose, from every machine-readable signal the site publishes: robots.txt " +
+        "per crawler, Cloudflare Content-Signal, the IETF Content-Usage directive and header, an RSL licence, a TDM " +
+        "reservation (header or /.well-known/tdmrep.json), ai.txt, and noai/noindex/nosnippet on the page itself. Purposes: " +
+        "'search' (index the page and show links and excerpts, no AI summary), 'answer' (input to a generated answer, " +
+        "including retrieval for RAG), 'train' (train or fine-tune a model), 'agent' (fetch or act on the page for a user, " +
+        "live). Returns a `verdict`: 'denied' (at least one signal reserves this use; any reservation wins), " +
+        "'allowed-under-terms' (an RSL licence permits it on the conditions listed in `terms`, such as payment or " +
+        "attribution), 'allowed' (no signal reserves the use, which is not a licence) or 'unknown' (the site's robots.txt " +
+        "could not be read, e.g. it answered 403 or 5xx). Also requests the page once as a representative crawler for the " +
+        "purpose and reports in `observed` whether the server served or refused it; a reservation that the server does not " +
+        "enforce is still a reservation. Every source read is listed in `signals` with what was found and what it decided. " +
+        "The `receipt` is a dated record of all of this, signed with Ed25519; the public key is published at " +
+        "/api/permission-key, so the receipt can be verified later. Use it before fetching pages for RAG, a dataset or an " +
+        "agent action, and whenever the user asks whether they may use, quote, index, train on or act on a page. It is a " +
+        "reading of the signals the site published on that date, not legal advice. 25 calls a day per network without an " +
+        "API key. Documented at https://machinereadiness.com/permission.",
+      inputSchema: {
+        url: z.string().describe("The page to ask about (e.g. 'https://example.com/article')."),
+        purpose: z
+          .enum(["search", "answer", "train", "agent"])
+          .describe("What you intend to do with the page: search, answer (including RAG), train, or agent."),
+        agent: z
+          .string()
+          .regex(/^[A-Za-z0-9_.-]{1,64}$/, "a crawler token, like GPTBot")
+          .optional()
+          .describe("Optional crawler token to ask about by name (e.g. 'GPTBot', 'ClaudeBot'). By default the purpose's whole crawler class is read."),
+        observe: z
+          .boolean()
+          .optional()
+          .describe("Default true: request the page once as a representative crawler and report what the server did. false reads the published signals only."),
+      },
+      annotations: {
+        readOnlyHint: true,
+        openWorldHint: true,
+      },
+    },
+    async ({ url, purpose, agent, observe }) => {
+      let qs = `?url=${encodeURIComponent(url)}&purpose=${encodeURIComponent(purpose)}`;
+      if (agent) qs += `&agent=${encodeURIComponent(agent)}`;
+      if (observe === false) qs += "&observe=0";
+      const data = await apiGet(`/api/permission${qs}`, { base: PERMISSION_API_BASE });
       return jsonContent(data);
     }
   );

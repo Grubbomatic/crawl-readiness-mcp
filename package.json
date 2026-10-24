@@ -1,8 +1,8 @@
 {
   "name": "crawl-readiness-mcp",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "mcpName": "io.github.Grubbomatic/crawl-readiness",
-  "description": "MCP server for Crawl Readiness — check AI readiness, validate schema/robots.txt, generate AI SEO files (llms.txt, robots.txt, JSON-LD), and read LLM Monitor share-of-voice trends directly from Claude, Cursor, and other MCP clients.",
+  "description": "MCP server for Crawl Readiness — check AI readiness, validate schema/robots.txt, generate AI SEO files (llms.txt, robots.txt, JSON-LD), read LLM Monitor share-of-voice trends, and check whether a page permits an AI use (search, answers, training, agent), directly from Claude, Cursor, and other MCP clients.",
   "type": "module",
   "main": "src/index.js",
   "bin": {
@@ -26,7 +26,10 @@
     "json-ld",
     "seo",
     "crawler",
-    "ai-readiness"
+    "ai-readiness",
+    "ai-permissions",
+    "rsl",
+    "machine-readiness"
   ],
   "author": "Crawl Readiness <support@crawlreadiness.com>",
   "license": "MIT",

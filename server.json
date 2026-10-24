@@ -1,25 +1,25 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Grubbomatic/crawl-readiness",
-  "description": "Audit any site for 50+ AI crawlers, generate llms.txt, robots.txt and schema, track AI mentions.",
+  "description": "Audit a site for 50+ AI crawlers, check if a page permits an AI use, generate llms.txt and schema.",
   "repository": {
     "url": "https://github.com/Grubbomatic/crawl-readiness-mcp",
     "source": "github"
   },
-  "version": "0.2.5",
+  "version": "0.2.6",
   "websiteUrl": "https://www.crawlreadiness.com/mcp",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "crawl-readiness-mcp",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
           "name": "CRAWL_READINESS_API_KEY",
-          "description": "Free API key from https://www.crawlreadiness.com/dashboard. The four audit tools work without it; the three generators and get_monitor_trend need it.",
+          "description": "Free API key from https://www.crawlreadiness.com/dashboard. The four audit tools and check_permission work without it; the three generators and get_monitor_trend need it.",
           "isRequired": false,
           "isSecret": true,
           "format": "string"

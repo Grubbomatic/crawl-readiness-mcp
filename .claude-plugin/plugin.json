@@ -1,8 +1,8 @@
 {
   "name": "crawl-readiness",
   "displayName": "Crawl Readiness",
-  "version": "0.2.5",
-  "description": "Check whether AI crawlers and assistants can read a website, generate the files that fix what's blocked (llms.txt, robots.txt, JSON-LD), and read your LLM Monitor trends, from inside Claude.",
+  "version": "0.2.6",
+  "description": "Check whether AI crawlers and assistants can read a website, generate the files that fix what's blocked (llms.txt, robots.txt, JSON-LD), read your LLM Monitor trends, and check whether a page's published signals permit search, answers, training or agent action, from inside Claude.",
   "author": {
     "name": "Crawl Readiness",
     "email": "support@crawlreadiness.com",
@@ -19,7 +19,9 @@
     "ai-crawlers",
     "json-ld",
     "chatgpt",
-    "perplexity"
+    "perplexity",
+    "ai-permissions",
+    "rsl"
   ],
   "icon": "./icon.png",
   "documentationUrl": "https://www.crawlreadiness.com/mcp",
@@ -30,7 +32,7 @@
     "crawl_readiness_api_key": {
       "type": "string",
       "title": "Crawl Readiness API key",
-      "description": "Optional. The four audit tools work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and the Monitor trend.",
+      "description": "Optional. The four audit tools and the permission check work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and the Monitor trend.",
       "sensitive": true,
       "required": false
     }

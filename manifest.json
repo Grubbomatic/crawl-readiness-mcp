@@ -2,9 +2,9 @@
   "manifest_version": "0.3",
   "name": "crawl-readiness",
   "display_name": "Crawl Readiness",
-  "version": "0.2.5",
-  "description": "Check whether AI crawlers can read a website, generate llms.txt, robots.txt and JSON-LD, and read LLM Monitor trends.",
-  "long_description": "Eight tools that call the live Crawl Readiness service. Four audit tools work without an account: score a site 0-100 against 50+ AI crawlers with a prioritized fix list, validate JSON-LD structured data, audit robots.txt line by line, and compare what people see with what AI crawlers receive. A free API key unlocks three generators (llms.txt, an AI-crawler-aware robots.txt, JSON-LD schema) and a read-only view of your LLM Monitor trend: whether ChatGPT, Claude, Perplexity and Google AI mention your brand against competitors over time.",
+  "version": "0.2.6",
+  "description": "Check whether AI crawlers can read a website and whether a page permits an AI use, generate llms.txt, robots.txt and JSON-LD, and read LLM Monitor trends.",
+  "long_description": "Nine tools that call the live Crawl Readiness service. Five work without an account: score a site 0-100 against 50+ AI crawlers with a prioritized fix list, validate JSON-LD structured data, audit robots.txt line by line, compare what people see with what AI crawlers receive, and check whether a page's published signals (robots.txt, Content-Signal, Content-Usage, RSL, TDM, ai.txt, noai) permit search, answers, training or agent action, with what the server did when asked and a signed receipt. A free API key unlocks three generators (llms.txt, an AI-crawler-aware robots.txt, JSON-LD schema) and a read-only view of your LLM Monitor trend: whether ChatGPT, Claude, Perplexity and Google AI mention your brand against competitors over time.",
   "author": {
     "name": "Crawl Readiness",
     "email": "support@crawlreadiness.com",
@@ -49,6 +49,10 @@
       "description": "Compare what people see with what AI crawlers receive from a page."
     },
     {
+      "name": "check_permission",
+      "description": "Ask whether a page may be used for search, answers, training or agent action, from the signals it publishes; signed receipt."
+    },
+    {
       "name": "generate_llms_txt",
       "description": "Crawl a site and produce an llms.txt file (API key)."
     },
@@ -74,7 +78,9 @@
     "json-ld",
     "chatgpt",
     "claude",
-    "perplexity"
+    "perplexity",
+    "ai-permissions",
+    "rsl"
   ],
   "license": "MIT",
   "privacy_policies": [
@@ -84,7 +90,7 @@
     "crawl_readiness_api_key": {
       "type": "string",
       "title": "Crawl Readiness API key",
-      "description": "Optional. The four audit tools work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and the Monitor trend.",
+      "description": "Optional. The four audit tools and the permission check work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and the Monitor trend.",
       "sensitive": true,
       "required": false
     }
