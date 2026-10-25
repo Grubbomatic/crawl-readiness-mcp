@@ -200,6 +200,6 @@ still agree.
   version on start.
 - The registry entry and the Glama page should show the new version within a
   few minutes, and the release should carry the `.mcpb`.
-- The Smithery listing, the directory submission and cursor.directory each
+- The directory submission and cursor.directory each
   show the new version (the directory follows the tracked tag).
 - Note the release in the Build Queue.
