@@ -18,13 +18,7 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { inflateRawSync, crc32 } from "node:zlib";
-
-const input = process.argv[2];
-if (!input || !input.endsWith(".mcpb")) {
-  console.error("usage: node scripts/smithery-bundle.mjs dist/<bundle>.mcpb");
-  process.exit(1);
-}
-const output = input.replace(/\.mcpb$/, "-smithery.mcpb");
+import { pathToFileURL } from "node:url";
 
 const url = (description) => ({ type: "string", description });
 export const INPUT_SCHEMAS = {
@@ -36,6 +30,16 @@ export const INPUT_SCHEMAS = {
   generate_robots_txt: { type: "object", properties: { url: url("The website to generate a robots.txt for."), preset: { type: "string", enum: ["allow-all", "search-only", "recommended", "block-all"], default: "recommended", description: "The AI-crawler policy preset to apply." } }, required: ["url"] },
   generate_schema: { type: "object", properties: { url: url("The website to generate schema for.") }, required: ["url"] },
   get_monitor_trend: { type: "object", properties: { project: { type: "string", description: "Brand name or project id to detail. Omit to list all monitored brands." } } },
+  check_permission: {
+    type: "object",
+    properties: {
+      url: url("The page to ask about (e.g. 'https://example.com/article')."),
+      purpose: { type: "string", enum: ["search", "answer", "train", "agent"], description: "What you intend to do with the page: search, answer (including RAG), train, or agent." },
+      agent: { type: "string", pattern: "^[A-Za-z0-9_.-]{1,64}$", description: "Optional crawler token to ask about by name (e.g. 'GPTBot', 'ClaudeBot'). By default the purpose's whole crawler class is read." },
+      observe: { type: "boolean", description: "Default true: request the page once as a representative crawler and report what the server did. false reads the published signals only." },
+    },
+    required: ["url", "purpose"],
+  },
 };
 
 // --- read the zip (local headers are enough: mcpb pack writes no data descriptors)
@@ -94,17 +98,32 @@ function writeZip(entries) {
   return Buffer.concat([...locals, ...centrals, end]);
 }
 
-const entries = readZip(readFileSync(input));
-const manifestEntry = entries.find((e) => e.name === "manifest.json");
-if (!manifestEntry) throw new Error("manifest.json not found at the archive root");
-const manifest = JSON.parse(manifestEntry.data.toString("utf8"));
-let added = 0;
-for (const tool of manifest.tools || []) {
-  const schema = INPUT_SCHEMAS[tool.name];
-  if (!schema) throw new Error(`no input schema for tool ${tool.name}; add it to INPUT_SCHEMAS`);
-  tool.inputSchema = schema;
-  added++;
+export function writeSmitheryCopy(input) {
+  const output = input.replace(/\.mcpb$/, "-smithery.mcpb");
+  const entries = readZip(readFileSync(input));
+  const manifestEntry = entries.find((e) => e.name === "manifest.json");
+  if (!manifestEntry) throw new Error("manifest.json not found at the archive root");
+  const manifest = JSON.parse(manifestEntry.data.toString("utf8"));
+  let added = 0;
+  for (const tool of manifest.tools || []) {
+    const schema = INPUT_SCHEMAS[tool.name];
+    if (!schema) throw new Error(`no input schema for tool ${tool.name}; add it to INPUT_SCHEMAS`);
+    tool.inputSchema = schema;
+    added++;
+  }
+  manifestEntry.data = Buffer.from(JSON.stringify(manifest, null, 2) + "\n", "utf8");
+  writeFileSync(output, writeZip(entries));
+  console.log(`${output}: ${entries.length} files, ${added} tools with input schemas, ${Math.round(readFileSync(output).length / 1024)} KB stored`);
+  return output;
 }
-manifestEntry.data = Buffer.from(JSON.stringify(manifest, null, 2) + "\n", "utf8");
-writeFileSync(output, writeZip(entries));
-console.log(`${output}: ${entries.length} files, ${added} tools with input schemas, ${Math.round(readFileSync(output).length / 1024)} KB stored`);
+
+// Run only when called directly; scripts/smoke.mjs imports INPUT_SCHEMAS to
+// check that every tool the server lists has a schema here.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const input = process.argv[2];
+  if (!input || !input.endsWith(".mcpb")) {
+    console.error("usage: node scripts/smithery-bundle.mjs dist/<bundle>.mcpb");
+    process.exit(1);
+  }
+  writeSmitheryCopy(input);
+}

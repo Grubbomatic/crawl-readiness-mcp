@@ -10,6 +10,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { INPUT_SCHEMAS } from "./smithery-bundle.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"));
@@ -86,6 +87,11 @@ try {
     problems.push("check_permission is not listed");
   } else if (!/not legal advice/.test(byName.check_permission)) {
     problems.push("check_permission: description must say it is a reading of published signals, not legal advice");
+  }
+  // The Smithery copy of the bundle needs an input schema for every tool;
+  // 0.2.6's release build failed because the new tool had none.
+  for (const t of tools) {
+    if (!INPUT_SCHEMAS[t.name]) problems.push(`${t.name}: no entry in scripts/smithery-bundle.mjs INPUT_SCHEMAS`);
   }
   const permission = tools.find((t) => t.name === "check_permission");
   const purposes = permission?.inputSchema?.properties?.purpose?.enum || [];
