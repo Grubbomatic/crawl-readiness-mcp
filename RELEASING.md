@@ -124,42 +124,20 @@ step 7b; the bundle takes about a minute.
 
 ## 7b. The bundle and the directories (**founder**)
 
-The same release feeds four listings. Each needs a login, so each is yours.
+The same release feeds three listings (Smithery is closed, see 2). Each needs a login, so each is yours.
 
 1. **Claude Desktop, one click.** Nothing to submit: the `.mcpb` on the
    release is the install. Download it once and double-click it to check the
    install dialog shows the icon, the description and the optional API key.
-2. **Smithery.** Publish the *Smithery copy* of the bundle from the release
-   with the Smithery CLI (the first time it asks for a Smithery API key, made
-   at smithery.ai → account → API keys):
-
-   ```bash
-   npx -y @smithery/cli mcp publish ./crawl-readiness-mcp-0.2.6-smithery.mcpb -n grubbomatic/crawl-readiness
-   ```
-
-   Not the plain bundle: Smithery wants an `inputSchema` on every tool in the
-   manifest, which the MCPB spec does not allow, so the release carries both
-   (`scripts/smithery-bundle.mjs` builds the copy in the bundle Action; run
-   it by hand on a downloaded bundle if needed).
-
-   Three things the first publish (12 Oct 2026) taught:
-
-   - The namespace has to exist before the server can. `grubbomatic` was
-     claimed that day with `npx -y @smithery/cli namespace create grubbomatic`
-     (the account's own namespace is `jaygrubb40`). Publishing into a
-     namespace that does not exist offers to create the server and then
-     fails with `404 Namespace not found`; `namespace list` shows what there
-     is.
-   - The CLI keeps the API key on the machine after the first publish, so a
-     later release asks for nothing.
-   - Smithery reads only the tools, the version and the user config from the
-     bundle. The listing's display name, description, homepage, repository
-     link and icon live on the server's **Settings → General** tab on
-     smithery.ai, set once on 12 Oct 2026; touch them after a release only
-     when the wording changed.
-
-   Then open the server's **Settings → Verification** page and complete the
-   official-vendor checklist.
+2. **Smithery: closed.** Since about 19 Oct 2026 every publish answers
+   `403 Updating servers has been removed`, and on 31 Oct 2026 Smithery shuts
+   its API, CLI, accounts and API keys (smithery.ai/future); the site stays
+   as a plain directory with a curated set. Our listing at
+   smithery.ai/servers/grubbomatic/crawl-readiness is frozen at 0.2.5 (eight
+   tools) and cannot be changed. The Action still builds the Smithery copy
+   of the bundle (`scripts/smithery-bundle.mjs`, an `inputSchema` on every
+   tool); it costs nothing and another directory may want the same shape.
+   Nothing to do here.
 3. **Anthropic's directory (Claude plugin).** Open
    https://claude.ai/directory/manage → **Submit new** → **Plugin bundle** →
    repository `Grubbomatic/crawl-readiness-mcp`, plugin path empty, tracked
