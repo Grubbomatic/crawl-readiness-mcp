@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+`check_permission` follows the permission check's version 2
+(machinereadiness.com, 28 Oct 2026). Same inputs; two defaults changed.
+
+- `observe` now defaults to false, as the API does: the request with a
+  representative crawler's user-agent string is sent only when asked for,
+  and its result is labelled for what it is (the string, sent from our
+  servers, beside our own request as the control).
+- `agent` is described as the caller's own crawler token: another
+  company's token cannot loosen the reading for the crawlers that do the job.
+- The description states the API's rules: any reservation wins (a block on
+  any one crawler that does the job included), a robots.txt server error is
+  a full disallow, `unknown` outranks `allowed`, and the receipt carries the
+  SHA-256 of every file read, verifiable later against current or retired
+  keys.
+
 ## 0.2.6 — 2026-10-24
 
 One tool added: `check_permission`, the Machine Readiness permission check.
