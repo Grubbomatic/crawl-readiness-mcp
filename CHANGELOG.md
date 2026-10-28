@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.2.8 — 2026-10-28
 
 `check_permission` follows the permission check's version 2
-(machinereadiness.com, 28 Oct 2026). Same inputs; two defaults changed.
+(machinereadiness.com, 28 Oct 2026). Same inputs; the default for
+`observe` changed.
 
 - `observe` now defaults to false, as the API does: the request with a
   representative crawler's user-agent string is sent only when asked for,
@@ -15,7 +16,17 @@
   any one crawler that does the job included), a robots.txt server error is
   a full disallow, `unknown` outranks `allowed`, and the receipt carries the
   SHA-256 of every file read, verifiable later against current or retired
-  keys.
+  keys. The README says the same.
+
+## 0.2.7 — 2026-10-28
+
+Wording only; no tool's name, inputs or output changed. The package
+description, the README, the manifest, the server instructions, the
+`get_monitor_trend` tool and the Claude plugin skill describe the Answer
+Analysis (whether live AI search named the brand for the questions its
+customers ask, and the change over time) rather than an "LLM Monitor" that
+tracks mentions, and the check as "can AI read your site, and what does its
+access policy allow" rather than "AI readiness / AI SEO".
 
 ## 0.2.6 — 2026-10-24
 

@@ -19,7 +19,7 @@ Nine tools your AI assistant can call:
 - `check_content_parity` — Compare what humans see vs what AI crawlers see
 
 **Permission (no signup):**
-- `check_permission` — Ask whether a page may be used for search, answers, training or agent action. Reads robots.txt, Content-Signal, Content-Usage, an RSL licence, the TDM reservation, ai.txt and the page's own noai tags, reports what the server did when a crawler asked, and returns a dated receipt signed with Ed25519. Documented at [machinereadiness.com/permission](https://machinereadiness.com/permission)
+- `check_permission` — Ask whether a page may be used for search, answers, training or agent action. Reads robots.txt, Content-Signal, Content-Usage, an RSL licence, the TDM reservation, ai.txt and the page's own directives: any reservation wins, and a source that could not be read makes the answer unknown, never allowed. Returns a dated receipt signed with Ed25519, with a hash of every file read. Documented at [machinereadiness.com/permission](https://machinereadiness.com/permission)
 
 **Generate (requires free API key):**
 - `generate_llms_txt` — Auto-crawl a site and produce a properly formatted llms.txt
@@ -146,7 +146,7 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 - **validate_schema:** per-block issues (errors, warnings, info), suggested missing types
 - **validate_robots:** line-by-line issues, AI-bot coverage summary
 - **check_content_parity:** verdict + per-crawler HTTP status, word overlap %, warnings
-- **check_permission:** verdict (`denied`, `allowed-under-terms`, `allowed`, `unknown`) with the reason, every signal as it was read, what the server did when asked as a crawler, and the signed receipt
+- **check_permission:** verdict (`denied`, `allowed-under-terms`, `allowed`, `unknown`) with the reason, every signal as it was read, the page's status, and the signed receipt with a hash of every file read; with `observe: true`, also how the server treated a crawler's user-agent string sent from our servers
 - **generate_llms_txt:** the file content + companion robots.txt snippet
 - **generate_robots_txt:** merged robots.txt with the AI policy applied
 - **generate_schema:** JSON-LD scripts for each detected schema type
