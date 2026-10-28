@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "crawl-readiness",
   "display_name": "Crawl Readiness",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Check whether AI crawlers can read a website and what its access policy allows, whether a page permits an AI use, generate llms.txt, robots.txt and JSON-LD, and read your Answer Analysis.",
   "long_description": "Nine tools that call the live Crawl Readiness service. Five work without an account: score a site 0-100 against 50+ AI crawlers with a prioritized fix list, validate JSON-LD structured data, audit robots.txt line by line, compare what people see with what AI crawlers receive, and check whether a page's published signals (robots.txt, Content-Signal, Content-Usage, RSL, TDM, ai.txt, noai) permit search, answers, training or agent action, with what the server did when asked and a signed receipt. A free API key unlocks three generators (llms.txt, an AI-crawler-aware robots.txt, JSON-LD schema) and a read-only view of your Answer Analysis: whether live AI search (Perplexity, Google AI Overviews) named your brand for the questions your customers ask, against competitors, over time.",
   "author": {
