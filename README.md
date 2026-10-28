@@ -1,10 +1,10 @@
 # Crawl Readiness MCP Server
 
-**An MCP server that checks a website's AI readiness: can ChatGPT, Claude, Perplexity, Google AI and 50+ other AI crawlers access it?** Then it generates the fixes (llms.txt, an AI-crawler robots.txt, JSON-LD structured data), reads your LLM Monitor results, and tells you whether a page's published signals permit a use (search, answers, training, agent action), inside Claude Desktop, Cursor, Cline, Windsurf and other MCP clients.
+**An MCP server that checks whether a website is set up for AI the way its owner intends: can GPTBot, ClaudeBot, PerplexityBot and 50+ other AI crawlers read it, and what does its access policy allow?** Then it generates the files (llms.txt, an AI-crawler robots.txt, JSON-LD structured data), reads your Answer Analysis, and tells you whether a page's published signals permit a use (search, answers, training, agent action), inside Claude Desktop, Cursor, Cline, Windsurf and other MCP clients.
 
-Ask Claude "is my site AI-readable?" and it'll actually check — running a live audit against 50+ AI crawlers (ChatGPT, Claude, Perplexity, Google AI, and more). Then ask it to fix what's broken, and it can generate a proper `llms.txt`, `robots.txt`, or JSON-LD schema and write it straight into your project.
+Ask Claude "can AI read my site?" and it will actually check, running a live audit against 50+ AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google's and more) and reading the access policy the site states. Then ask it to fix what is blocked, and it can generate a proper `llms.txt`, `robots.txt` or JSON-LD schema and write it straight into your project.
 
-No more copy-paste between your editor and yet another SEO tool.
+No more copy-paste between your editor and a browser.
 
 ---
 
@@ -26,8 +26,8 @@ Nine tools your AI assistant can call:
 - `generate_robots_txt` — AI-crawler-aware robots.txt with preset policies
 - `generate_schema` — Organization / WebSite / Article JSON-LD ready to paste
 
-**Monitor (read-only, requires free API key):**
-- `get_monitor_trend` — See whether ChatGPT, Claude, Perplexity & Google AI mention your brand vs competitors, and how that's trending week over week (reads your LLM Monitor projects; doesn't trigger runs)
+**Answer Analysis (read-only, requires free API key):**
+- `get_monitor_trend` — Read your Answer Analysis: for the questions your customers ask, whether live AI search (Perplexity, Google AI Overviews) named your brand or a competitor, and the change run over run (reads existing analyses; doesn't trigger runs)
 
 ---
 
@@ -133,7 +133,7 @@ Your AI can chain tools automatically — audit, identify issues, fix them, and 
 
 | Env var | Purpose | Default |
 |---|---|---|
-| `CRAWL_READINESS_API_KEY` | Free API key for the generators and the Monitor read; lifts the daily limit on `check_permission` | none |
+| `CRAWL_READINESS_API_KEY` | Free API key for the generators and the Answer Analysis read; lifts the daily limit on `check_permission` | none |
 | `CRAWL_READINESS_API_BASE` | Override the API base URL for every tool, the permission check included (for testing) | `https://www.crawlreadiness.com` |
 
 ---
@@ -150,7 +150,7 @@ Each tool returns the full JSON response from the Crawl Readiness API — the sa
 - **generate_llms_txt:** the file content + companion robots.txt snippet
 - **generate_robots_txt:** merged robots.txt with the AI policy applied
 - **generate_schema:** JSON-LD scripts for each detected schema type
-- **get_monitor_trend:** per-brand mention rate, share of voice, per-provider breakdown, competitor comparison, trend over time, and short example answers
+- **get_monitor_trend:** per analysis, the share of answers naming the brand, the per-provider split, the competitors named, the trend run over run, and short example answers
 
 ---
 
@@ -172,7 +172,7 @@ The plugin's `.mcp.json` starts the published npm package pinned to the same ver
 
 ## About
 
-Crawl Readiness is a suite of AI-SEO tools that check whether AI systems can access your website and help you fix what's blocked. Every generator tool in this MCP server is also available on the web at [crawlreadiness.com/tools](https://www.crawlreadiness.com/tools). The MCP server just makes the same tools callable from inside your AI assistant, so the "audit → fix → apply" loop happens in one conversation without leaving your editor.
+Crawl Readiness checks whether a website is set up for AI the way its owner intends: what AI crawlers can read, what its access policy allows, and what is missing, with the files that fix it. Every generator tool in this MCP server is also available on the web at [crawlreadiness.com/tools](https://www.crawlreadiness.com/tools). The MCP server just makes the same tools callable from inside your AI assistant, so the "audit → fix → apply" loop happens in one conversation without leaving your editor.
 
 ## Releasing (maintainers)
 

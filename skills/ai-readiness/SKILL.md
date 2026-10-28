@@ -1,9 +1,9 @@
 ---
 name: ai-readiness
-description: Check whether AI crawlers and assistants (ChatGPT, Claude, Perplexity, Google AI) can read a website, fix what blocks them, and read the LLM Monitor trend. Use when the user asks if their site is AI-readable or AI-ready, mentions GPTBot, ClaudeBot, OAI-SearchBot, llms.txt, robots.txt for AI, agents.json, GEO or AI SEO, asks what ChatGPT can see on a site, asks whether AI assistants mention their brand, or asks whether they may crawl, quote, index, train on or act on a page.
+description: Check whether AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google's and 50+ more) can read a website and what its access policy allows, generate the files that fix what is blocked, read the Answer Analysis, and check whether a page permits an AI use. Use when a user asks whether AI can read their site, how to make it readable, or whether a page may be used for search, answers, training or an agent.
 ---
 
-# AI readiness with the Crawl Readiness tools
+# Readable by AI, with the Crawl Readiness tools
 
 The `crawl-readiness` MCP server gives you nine tools that call the live
 service at www.crawlreadiness.com (the permission check at
@@ -48,7 +48,7 @@ Read the result like this:
 
 ## 3. Monitor, when they have projects
 
-`get_monitor_trend` reads the user's LLM Monitor projects; it never starts a
+`get_monitor_trend` reads the user's Answer Analyses; it never starts a
 run. Each result is labelled by how it was measured: live search (Perplexity,
 Google AI Overviews) or model knowledge (ChatGPT, Claude, from their APIs).
 Say which is which when you report a number, and treat a single run as a

@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Grubbomatic/crawl-readiness",
-  "description": "Audit a site for 50+ AI crawlers, check if a page permits an AI use, generate llms.txt and schema.",
+  "description": "Check what AI crawlers may read and what a page permits, generate llms.txt and schema.",
   "repository": {
     "url": "https://github.com/Grubbomatic/crawl-readiness-mcp",
     "source": "github"
   },
-  "version": "0.2.6",
+  "version": "0.2.7",
   "websiteUrl": "https://www.crawlreadiness.com/mcp",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "crawl-readiness-mcp",
-      "version": "0.2.6",
+      "version": "0.2.7",
       "transport": {
         "type": "stdio"
       },

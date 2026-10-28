@@ -129,13 +129,13 @@ export function registerTools(server) {
     {
       title: "Check AI Readiness",
       description:
-        "Check whether AI crawlers (ChatGPT, Claude, Perplexity, Google AI, and 50+ others) can access a website. " +
+        "Check whether AI crawlers (ChatGPT, Claude, Perplexity, Google AI, and 50+ others) can access a website, and what access policy it states. " +
         "Returns a 0-100 AI readiness score, per-crawler access status, detected AI-specific files (llms.txt, agents.json), " +
         "structured data presence, meta signals, and a prioritized fix list. The score counts the crawlers that feed AI " +
         "search and answers: each entry in `robots.results` carries its `purpose` and whether it is `scored`, and " +
         "training-only crawlers are listed but never counted, so blocking them does not lower the score. Fixes marked " +
         "`extra: true` (llms.txt, agents.json, Content-Signal, a markdown copy, agent-ready forms) are informational " +
-        "'Going further' items and do not affect the score; present them as optional. Use this as the first step in any AI SEO audit.",
+        "'Going further' items and do not affect the score; present them as optional. Use this as the first step whenever a user asks whether AI can read a site.",
       inputSchema: {
         url: z.string().describe("The website URL to check (e.g. 'example.com' or 'https://example.com/page')."),
       },
@@ -310,14 +310,15 @@ export function registerTools(server) {
   server.registerTool(
     "get_monitor_trend",
     {
-      title: "Get LLM Monitor Trend",
+      title: "Read the Answer Analysis",
       description:
-        "See whether AI assistants (ChatGPT, Claude, Perplexity, Google AI) actually mention a brand in their " +
-        "answers, and how that share-of-voice is trending versus competitors, week over week. Call with NO argument " +
-        "to list the user's monitored brands with each one's current mention rate and direction; pass a brand name " +
-        "or project id to get that brand's full trend, per-provider breakdown, competitor comparison, average " +
-        "position, and short example answers. Reads data the user's LLM Monitor projects have already collected — " +
-        "it does not trigger new runs. Read-only. Requires an API key.",
+        "Read the user's Answer Analysis: for the questions a brand's customers ask, how often live AI search " +
+        "(Perplexity, Google AI Overviews) named the brand, which competitors were named, and the change run over " +
+        "run. Call with NO argument to list the user's analyses with each brand's latest share of answers naming " +
+        "it and the direction; pass a brand name or project id to get that brand's full trend, per-provider " +
+        "breakdown, competitor comparison, average position, and short example answers. Reads data existing " +
+        "analyses have already collected — it does not trigger new runs, and it measures rather than promises. " +
+        "Read-only. Requires an API key.",
       inputSchema: {
         project: z
           .string()

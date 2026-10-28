@@ -1,7 +1,7 @@
 {
   "name": "crawl-readiness",
   "displayName": "Crawl Readiness",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Check whether AI crawlers and assistants can read a website, generate the files that fix what's blocked (llms.txt, robots.txt, JSON-LD), read your LLM Monitor trends, and check whether a page's published signals permit search, answers, training or agent action, from inside Claude.",
   "author": {
     "name": "Crawl Readiness",

@@ -2,9 +2,9 @@
   "manifest_version": "0.3",
   "name": "crawl-readiness",
   "display_name": "Crawl Readiness",
-  "version": "0.2.6",
-  "description": "Check whether AI crawlers can read a website and whether a page permits an AI use, generate llms.txt, robots.txt and JSON-LD, and read LLM Monitor trends.",
-  "long_description": "Nine tools that call the live Crawl Readiness service. Five work without an account: score a site 0-100 against 50+ AI crawlers with a prioritized fix list, validate JSON-LD structured data, audit robots.txt line by line, compare what people see with what AI crawlers receive, and check whether a page's published signals (robots.txt, Content-Signal, Content-Usage, RSL, TDM, ai.txt, noai) permit search, answers, training or agent action, with what the server did when asked and a signed receipt. A free API key unlocks three generators (llms.txt, an AI-crawler-aware robots.txt, JSON-LD schema) and a read-only view of your LLM Monitor trend: whether ChatGPT, Claude, Perplexity and Google AI mention your brand against competitors over time.",
+  "version": "0.2.7",
+  "description": "Check whether AI crawlers can read a website and what its access policy allows, whether a page permits an AI use, generate llms.txt, robots.txt and JSON-LD, and read your Answer Analysis.",
+  "long_description": "Nine tools that call the live Crawl Readiness service. Five work without an account: score a site 0-100 against 50+ AI crawlers with a prioritized fix list, validate JSON-LD structured data, audit robots.txt line by line, compare what people see with what AI crawlers receive, and check whether a page's published signals (robots.txt, Content-Signal, Content-Usage, RSL, TDM, ai.txt, noai) permit search, answers, training or agent action, with what the server did when asked and a signed receipt. A free API key unlocks three generators (llms.txt, an AI-crawler-aware robots.txt, JSON-LD schema) and a read-only view of your Answer Analysis: whether live AI search (Perplexity, Google AI Overviews) named your brand for the questions your customers ask, against competitors, over time.",
   "author": {
     "name": "Crawl Readiness",
     "email": "support@crawlreadiness.com",
@@ -66,7 +66,7 @@
     },
     {
       "name": "get_monitor_trend",
-      "description": "Read your LLM Monitor projects: brand mentions versus competitors across AI providers over time (API key)."
+      "description": "Read your Answer Analysis: whether live AI search named the brand for the questions its customers ask, versus competitors, over time (API key)."
     }
   ],
   "keywords": [
@@ -90,7 +90,7 @@
     "crawl_readiness_api_key": {
       "type": "string",
       "title": "Crawl Readiness API key",
-      "description": "Optional. The four audit tools and the permission check work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and the Monitor trend.",
+      "description": "Optional. The four audit tools and the permission check work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and the Answer Analysis read.",
       "sensitive": true,
       "required": false
     }
