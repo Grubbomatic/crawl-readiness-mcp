@@ -65,13 +65,16 @@ when the user asks whether they may use, quote or train on a page.
   published signal reserves the use. `allowed-under-terms` means an RSL
   licence permits it on the conditions in `terms`. `allowed` means only
   that nothing reserves the use, which is not a licence. `unknown` means
-  the site's robots.txt could not be read; say "unknown", never "allowed".
+  a source that could carry a reservation could not be read (robots.txt
+  answered 401 or 403, the page refused the request, a licence could not
+  be fetched); say "unknown", never "allowed".
 - `signals` lists every source read (robots.txt, Content-Signal,
   Content-Usage, RSL, TDM, ai.txt, the page's own tags) with what it
   decided. Quote the one that decided the verdict.
-- `observed` is what the server did when asked as a representative crawler.
-  A `denied` with `served` means the site states a reservation but does not
-  enforce it; report both, and never treat serving as permission.
+- `observed` is only there when you asked with `observe: true`: how the
+  server treated a representative crawler's user-agent string sent from
+  Crawl Readiness's servers, not what the real crawler gets. A `denied` with
+  `served` is still `denied`; never treat serving as permission.
 - `receipt` is a dated, signed record of all of this. Offer to keep it when
   the user may later need to show what the site published on that date.
 - It is a reading of published signals, not legal advice. Say so when the

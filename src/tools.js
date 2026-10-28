@@ -348,14 +348,17 @@ export function registerTools(server) {
         "reservation (header or /.well-known/tdmrep.json), ai.txt, and noai/noindex/nosnippet on the page itself. Purposes: " +
         "'search' (index the page and show links and excerpts, no AI summary), 'answer' (input to a generated answer, " +
         "including retrieval for RAG), 'train' (train or fine-tune a model), 'agent' (fetch or act on the page for a user, " +
-        "live). Returns a `verdict`: 'denied' (at least one signal reserves this use; any reservation wins), " +
-        "'allowed-under-terms' (an RSL licence permits it on the conditions listed in `terms`, such as payment or " +
-        "attribution), 'allowed' (no signal reserves the use, which is not a licence) or 'unknown' (the site's robots.txt " +
-        "could not be read, e.g. it answered 403 or 5xx). Also requests the page once as a representative crawler for the " +
-        "purpose and reports in `observed` whether the server served or refused it; a reservation that the server does not " +
-        "enforce is still a reservation. Every source read is listed in `signals` with what was found and what it decided. " +
-        "The `receipt` is a dated record of all of this, signed with Ed25519; the public key is published at " +
-        "/api/permission-key, so the receipt can be verified later. Use it before fetching pages for RAG, a dataset or an " +
+        "live). Returns a `verdict`: 'denied' (a signal reserves this use; any reservation wins, a block on any one " +
+        "crawler that does the job included, and a robots.txt answering a server error counts as a full disallow), " +
+        "'allowed-under-terms' (permitted on the conditions listed in `terms`, such as payment or a licence server), " +
+        "'unknown' (a source that could carry a reservation could not be read: robots.txt answered 401 or 403, the page " +
+        "refused the request, or a licence could not be fetched; unknown outranks allowed) or 'allowed' (no signal " +
+        "reserves the use, which is not a licence). With observe: true it also requests the page once with a " +
+        "representative crawler's user-agent string, from Crawl Readiness's servers, and reports the status in " +
+        "`observed`: that shows how the server treats the string, not what the real crawler gets. Every source read is " +
+        "listed in `signals` with what was found and what it decided. The `receipt` is a dated record of all of this, " +
+        "with the SHA-256 of every file read, signed with Ed25519; /api/permission-key publishes the current and retired " +
+        "public keys, so the receipt can be verified later. Use it before fetching pages for RAG, a dataset or an " +
         "agent action, and whenever the user asks whether they may use, quote, index, train on or act on a page. It is a " +
         "reading of the signals the site published on that date, not legal advice. 25 calls a day per network without an " +
         "API key. Documented at https://machinereadiness.com/permission.",
@@ -368,11 +371,11 @@ export function registerTools(server) {
           .string()
           .regex(/^[A-Za-z0-9_.-]{1,64}$/, "a crawler token, like GPTBot")
           .optional()
-          .describe("Optional crawler token to ask about by name (e.g. 'GPTBot', 'ClaudeBot'). By default the purpose's whole crawler class is read."),
+          .describe("Optional: your own crawler's token (e.g. 'MyBot'), to read robots.txt for it. Another company's token (e.g. 'GPTBot') cannot loosen the reading for the crawlers that do the job. By default that whole class is read."),
         observe: z
           .boolean()
           .optional()
-          .describe("Default true: request the page once as a representative crawler and report what the server did. false reads the published signals only."),
+          .describe("Default false. true also requests the page once with a representative crawler's user-agent string, from our servers, and reports the status; it does not show what the real crawler gets."),
       },
       annotations: {
         readOnlyHint: true,
@@ -382,7 +385,7 @@ export function registerTools(server) {
     async ({ url, purpose, agent, observe }) => {
       let qs = `?url=${encodeURIComponent(url)}&purpose=${encodeURIComponent(purpose)}`;
       if (agent) qs += `&agent=${encodeURIComponent(agent)}`;
-      if (observe === false) qs += "&observe=0";
+      if (observe === true) qs += "&observe=1";
       const data = await apiGet(`/api/permission${qs}`, { base: PERMISSION_API_BASE });
       return jsonContent(data);
     }

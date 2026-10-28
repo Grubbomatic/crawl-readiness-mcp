@@ -35,8 +35,8 @@ export const INPUT_SCHEMAS = {
     properties: {
       url: url("The page to ask about (e.g. 'https://example.com/article')."),
       purpose: { type: "string", enum: ["search", "answer", "train", "agent"], description: "What you intend to do with the page: search, answer (including RAG), train, or agent." },
-      agent: { type: "string", pattern: "^[A-Za-z0-9_.-]{1,64}$", description: "Optional crawler token to ask about by name (e.g. 'GPTBot', 'ClaudeBot'). By default the purpose's whole crawler class is read." },
-      observe: { type: "boolean", description: "Default true: request the page once as a representative crawler and report what the server did. false reads the published signals only." },
+      agent: { type: "string", pattern: "^[A-Za-z0-9_.-]{1,64}$", description: "Optional: your own crawler's token (e.g. 'MyBot'), to read robots.txt for it. Another company's token (e.g. 'GPTBot') cannot loosen the reading for the crawlers that do the job. By default that whole class is read." },
+      observe: { type: "boolean", description: "Default false. true also requests the page once with a representative crawler's user-agent string, from our servers, and reports the status; it does not show what the real crawler gets." },
     },
     required: ["url", "purpose"],
   },
