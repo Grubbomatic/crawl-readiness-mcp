@@ -318,7 +318,7 @@ export function registerTools(server) {
         "it and the direction; pass a brand name or project id to get that brand's full trend, per-provider " +
         "breakdown, competitor comparison, average position, and short example answers. Reads data existing " +
         "analyses have already collected — it does not trigger new runs, and it measures rather than promises. " +
-        "Read-only. Requires an API key.",
+        "Read-only. Requires an API key on a plan that includes Answer Analyses (Monitor, Agency or the audit).",
       inputSchema: {
         project: z
           .string()

@@ -1,8 +1,8 @@
 {
   "name": "crawl-readiness",
   "displayName": "Crawl Readiness",
-  "version": "0.2.8",
-  "description": "Check whether AI crawlers and assistants can read a website, generate the files that fix what's blocked (llms.txt, robots.txt, JSON-LD), read your LLM Monitor trends, and check whether a page's published signals permit search, answers, training or agent action, from inside Claude.",
+  "version": "0.2.9",
+  "description": "Check whether AI crawlers can read a website and what its access policy allows, whether a page permits an AI use, generate llms.txt, robots.txt and JSON-LD, and read your Answer Analysis.",
   "author": {
     "name": "Crawl Readiness",
     "email": "support@crawlreadiness.com",
@@ -12,16 +12,14 @@
   "repository": "https://github.com/Grubbomatic/crawl-readiness-mcp",
   "license": "MIT",
   "keywords": [
-    "ai-seo",
-    "geo",
+    "ai-crawlers",
     "llms.txt",
     "robots.txt",
-    "ai-crawlers",
     "json-ld",
-    "chatgpt",
-    "perplexity",
     "ai-permissions",
-    "rsl"
+    "rsl",
+    "machine-readiness",
+    "access-policy"
   ],
   "icon": "./icon.png",
   "documentationUrl": "https://www.crawlreadiness.com/mcp",
@@ -32,7 +30,7 @@
     "crawl_readiness_api_key": {
       "type": "string",
       "title": "Crawl Readiness API key",
-      "description": "Optional. The four audit tools and the permission check work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and the Monitor trend.",
+      "description": "Optional. The five checks (the four audit tools and the permission check) work without it. A free key from https://www.crawlreadiness.com/dashboard unlocks the three generators and lifts the permission check's daily limit. Reading an Answer Analysis needs a key on a plan that includes one (Monitor, Agency or the audit).",
       "sensitive": true,
       "required": false
     }

@@ -105,6 +105,15 @@ for (const f of ["src/index.js", "src/tools.js"]) {
     `${f} has a hard-coded version — it should read from package.json`
   );
 }
+// The listings read these files, and 0.2.7's wording pass missed one of them
+// (plugin.json kept "LLM Monitor" until 0.2.9). The retired story stays out.
+for (const f of ["package.json", "server.json", "manifest.json", ".claude-plugin/plugin.json"]) {
+  const body = fs.readFileSync(path.join(ROOT, f), "utf8");
+  const stale = body.match(/LLM Monitor|ai-seo|AI SEO|"geo"|"seo"/);
+  check(!stale, `${f} still says "${stale?.[0]}" — the listings show it`);
+}
+// npm keeps 255 characters of a description and cuts the rest mid-word.
+check(pkg.description.length <= 255, `package.json description is ${pkg.description.length} characters; npm keeps 255`);
 
 if (problems.length) {
   console.error("\nthe registry would reject this:");

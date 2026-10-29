@@ -26,7 +26,7 @@ Nine tools your AI assistant can call:
 - `generate_robots_txt` — AI-crawler-aware robots.txt with preset policies
 - `generate_schema` — Organization / WebSite / Article JSON-LD ready to paste
 
-**Answer Analysis (read-only, requires free API key):**
+**Answer Analysis (read-only; needs an API key, and the analyses come with Monitor, Agency or the audit):**
 - `get_monitor_trend` — Read your Answer Analysis: for the questions your customers ask, whether live AI search (Perplexity, Google AI Overviews) named your brand or a competitor, and the change run over run (reads existing analyses; doesn't trigger runs)
 
 ---
@@ -90,7 +90,7 @@ Same shape — add `crawl-readiness` to your MCP servers list with `npx -y crawl
 
 ## Unlock the generator tools
 
-The four audit tools work out of the box, no signup. The three generator tools need an API key — free at [crawlreadiness.com/dashboard](https://www.crawlreadiness.com/dashboard) (50 checks/month on the free tier, no credit card).
+The five checks (the four audit tools and `check_permission`) work out of the box, no signup. The three generator tools need an API key — free at [crawlreadiness.com/dashboard](https://www.crawlreadiness.com/dashboard) (50 checks/month on the free tier, no credit card). `get_monitor_trend` needs a key too, on a plan that includes Answer Analyses (Monitor, Agency or the audit).
 
 Once you have a key, add it via env in the same config:
 
@@ -133,7 +133,7 @@ Your AI can chain tools automatically — audit, identify issues, fix them, and 
 
 | Env var | Purpose | Default |
 |---|---|---|
-| `CRAWL_READINESS_API_KEY` | Free API key for the generators and the Answer Analysis read; lifts the daily limit on `check_permission` | none |
+| `CRAWL_READINESS_API_KEY` | API key (free) for the generators; lifts the daily limit on `check_permission`; reads your Answer Analyses on a plan that includes them | none |
 | `CRAWL_READINESS_API_BASE` | Override the API base URL for every tool, the permission check included (for testing) | `https://www.crawlreadiness.com` |
 
 ---
