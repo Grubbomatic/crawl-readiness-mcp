@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.2.9 — 2026-10-28
+
+Wording only: what the listings read now matches the server. No tool
+changed what it does.
+
+- `.claude-plugin/plugin.json` (read by cursor.directory and the Claude
+  directory) no longer says "read your LLM Monitor trends": its description
+  is the manifest's, and its keywords drop `ai-seo` and `geo` for
+  `ai-crawlers`, `access-policy`, `machine-readiness` and the rest.
+  `manifest.json` drops the same keywords.
+- The npm description fits npm's 255 characters (it was 347, cut off
+  mid-word as "…whether a page perm"), and the npm keywords drop `ai-seo`
+  and `seo`.
+- The API key is described as it works: the five checks need none, a free
+  key unlocks the three generators and lifts the permission check's daily
+  limit, and reading an Answer Analysis needs a key on a plan that includes
+  one (Monitor, Agency or the audit). The README, the manifest, the plugin
+  settings, server.json and `get_monitor_trend`'s description say the same.
+- `scripts/release.mjs` refuses a release whose listing files still carry
+  the retired wording, or whose npm description is over 255 characters.
+
 ## 0.2.8 — 2026-10-28
 
 `check_permission` follows the permission check's version 2

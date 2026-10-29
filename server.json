@@ -6,20 +6,20 @@
     "url": "https://github.com/Grubbomatic/crawl-readiness-mcp",
     "source": "github"
   },
-  "version": "0.2.8",
+  "version": "0.2.9",
   "websiteUrl": "https://www.crawlreadiness.com/mcp",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "crawl-readiness-mcp",
-      "version": "0.2.8",
+      "version": "0.2.9",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
           "name": "CRAWL_READINESS_API_KEY",
-          "description": "Free API key from https://www.crawlreadiness.com/dashboard. The four audit tools and check_permission work without it; the three generators and get_monitor_trend need it.",
+          "description": "Free API key from https://www.crawlreadiness.com/dashboard. The four audit tools and check_permission work without it; the three generators need it, and get_monitor_trend needs one on a plan with Answer Analyses.",
           "isRequired": false,
           "isSecret": true,
           "format": "string"
